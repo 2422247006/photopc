@@ -11,7 +11,7 @@
     >
       <el-menu-item index="1">
         <i class="el-icon-s-home"></i>
-        <router-link tag="span" slot="title" :to="{path:'/',query:{title:'概况'}}">概况</router-link>
+        <router-link tag="span" slot="title" :to="{path:'/',query:{title:'概况',id:0}}">概况</router-link>
       </el-menu-item>
 
       <el-submenu index="2">
@@ -22,10 +22,10 @@
 
         <el-menu-item-group>
           <el-menu-item index="2-1">
-            <router-link tag="span" :to="{path:'/order_1',query:{title:'拍摄订单管理'}}">拍摄订单管理</router-link>
+            <router-link tag="span" :to="{path:'/order_1',query:{title:'拍摄订单管理',id:0}}">拍摄订单管理</router-link>
           </el-menu-item>
           <el-menu-item index="2-2">
-              <router-link tag="span" :to="{path:'/order_2',query:{title:'排单表'}}">排单表</router-link>
+            <router-link tag="span" :to="{path:'/order_2',query:{title:'排单表',id:0}}">排单表</router-link>
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
@@ -63,13 +63,15 @@
       </el-submenu>
     </el-menu>
     <div class="con">
-      <div class="header">{{title}}</div>
-      <div class="wrap">
- <router-view></router-view>
+      <div class="header">
+        {{title}}
+        <span class="back" @click="backclick" v-if="id==1">返回</span>
       </div>
-     
+
+      <div class="wrap">
+        <router-view></router-view>
+      </div>
     </div>
-   
   </div>
 </template>
 
@@ -79,17 +81,19 @@ export default {
 
   data() {
     return {
+      id:0,
       title: "概况",
       props: {
-          label: 'name',
-          children: 'zones',
-          isLeaf: 'leaf'
-        },
+        label: "name",
+        children: "zones",
+        isLeaf: "leaf"
+      }
     };
   },
   watch: {
     $route(to, from) {
-      this.title = this.$route.query.title;
+      this.title = this.$route.query.title
+      this.id=this.$route.query.id
     }
   },
   methods: {
@@ -98,6 +102,9 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    backclick(){
+      this.$router.go(-1)
     }
   }
 };
@@ -113,7 +120,7 @@ export default {
   bottom: 0;
 }
 .con {
-  width: 87%;
+  width: 88%;
   position: absolute;
   top: 0;
   right: 0;
@@ -123,21 +130,25 @@ export default {
   width: 100%;
   height: 40px;
   line-height: 40px;
-  border-bottom: 0.1px solid#113A64;
+  border-bottom: 0.1px solid rgb(221, 221, 221);
   font-size: 16px;
-  font-weight: 550;
   color: #113a64;
-   padding-left: 10px;
+  padding-left: 10px;
   box-sizing: border-box;
 }
-.wrap{
- position: absolute;
- top:40px;
- left:0;
- right:0;
- bottom:0;
- overflow: scroll;
+.wrap {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll;
   padding: 10px 50px;
   box-sizing: border-box;
+}
+.back {
+  color: blue;
+  margin-left: 20px;
+  font-size: 14px;
 }
 </style>
