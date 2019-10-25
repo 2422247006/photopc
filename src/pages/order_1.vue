@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane :label="item.label" v-for="item of tablist" :key="item.id">
+      <el-tab-pane  :name='item.name' :label="item.label" v-for="item of tablist" >
         <div class="search">
           <el-select v-model="value" placeholder="请选择">
             <el-option
@@ -34,7 +34,7 @@
               <div class="do" v-if="changeactive==scope.$index">
                 <p 
                 v-for="(item,index) of list" 
-                :key="item.id" 
+                
                 :class="{col:changecol==index}"
                 @click="changepage(index,item.url,item.txt)">{{item.txt}}</p>
               </div>
@@ -59,7 +59,7 @@ export default {
         changecol:-1,
       current: 0,
       changeactive: -1,
-      activeName: "tabname1",
+      activeName: "name1",
       value: "",
       input: "",
       list:[
@@ -74,7 +74,8 @@ export default {
         },
         {
           id: 2,
-          txt: "录入BS"
+          txt: "录入BS",
+          url:'/ds'
         },
         {
           id: 3,
@@ -82,37 +83,45 @@ export default {
         },
         {
           id: 4,
-          txt: "完成订单"
+          txt: "完成订单",
+         url:'/finish_order'
         }
       ],
       tablist: [
         {
           id: 0,
-          label: "全部订单"
+          label: "全部订单",
+          name:'name1'
         },
         {
           id: 0,
-          label: "未支付"
+          label: "未支付",
+           name:'name2'
         },
         {
           id: 0,
-          label: "等待拍摄"
+          label: "等待拍摄",
+           name:'name3'
         },
         {
           id: 0,
-          label: "当日拍摄"
+          label: "当日拍摄",
+           name:'name4'
         },
         {
           id: 0,
-          label: "拍摄中"
+          label: "拍摄中",
+           name:'name5'
         },
         {
           id: 0,
-          label: "完成"
+          label: "完成",
+           name:'name6'
         },
         {
           id: 0,
-          label: "关闭"
+          label: "关闭",
+           name:'name7'
         }
       ],
       tableData: [

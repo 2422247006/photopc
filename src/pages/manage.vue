@@ -1,17 +1,15 @@
 <template>
   <div class="hello">
     <el-menu
-      default-active="1"
+      :default-active="activeindex"
       class="el-menu-vetical-demo"
-      @open="handleOpen"
-      @close="handleClose"
       background-color="#113A64"
       text-color="#fff"
       active-text-color="#ffd04b"
     >
       <el-menu-item index="1">
         <i class="el-icon-s-home"></i>
-        <router-link tag="span" slot="title" :to="{path:'/',query:{title:'概况',id:0}}">概况</router-link>
+         <router-link tag="span" to='/'>概况</router-link>
       </el-menu-item>
 
       <el-submenu index="2">
@@ -22,10 +20,10 @@
 
         <el-menu-item-group>
           <el-menu-item index="2-1">
-            <router-link tag="span" :to="{path:'/order_1',query:{title:'拍摄订单管理',id:0}}">拍摄订单管理</router-link>
+            <router-link tag="span" to='/order_1'>拍摄订单管理</router-link>
           </el-menu-item>
           <el-menu-item index="2-2">
-            <router-link tag="span" :to="{path:'/order_2',query:{title:'排单表',id:0}}">排单表</router-link>
+            <router-link tag="span" to='/order_2'>排单表</router-link>
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
@@ -37,10 +35,18 @@
         </template>
         <el-submenu index="3-1">
           <template slot="title">绩效管理</template>
-          <el-menu-item index="3-1-1">个人绩效查询</el-menu-item>
-          <el-menu-item index="3-1-2">门店绩效查询</el-menu-item>
-          <el-menu-item index="3-1-3">个人NPS统计</el-menu-item>
-          <el-menu-item index="3-1-4">门店NPS统计</el-menu-item>
+          <el-menu-item index="3-1-1">
+            <router-link tag="span" to='/performance'>个人绩效查询</router-link>
+            </el-menu-item>
+          <el-menu-item index="3-1-2">
+               <router-link tag="span" to='/performancebus'>门店绩效查询</router-link>
+          </el-menu-item>
+          <el-menu-item index="3-1-3">
+           <router-link tag="span" to='/nps'>个人NPS统计</router-link>
+            </el-menu-item>
+          <el-menu-item index="3-1-4">
+             <router-link tag="span" to='/npsbus'>门店NPS统计</router-link>
+          </el-menu-item>
         </el-submenu>
       </el-submenu>
       <el-submenu index="4">
@@ -64,8 +70,8 @@
     </el-menu>
     <div class="con">
       <div class="header">
-        {{title}}
-        <span class="back" @click="backclick" v-if="id==1">返回</span>
+        {{$route.name.tit}}
+        <span class="back" @click="backclick" v-if="$route.name.id==1">返回</span>
       </div>
 
       <div class="wrap">
@@ -81,7 +87,8 @@ export default {
 
   data() {
     return {
-      id:0,
+      activeindex: "1",
+      id: 0,
       title: "概况",
       props: {
         label: "name",
@@ -92,20 +99,20 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.title = this.$route.query.title
-      this.id=this.$route.query.id
+      this.watchrouter();
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+    watchrouter() {
+      sessionStorage.activeindex = this.$route.name.num;
     },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    backclick(){
-      this.$router.go(-1)
+    backclick() {
+      this.$router.go(-1);
     }
+  },
+  created() {
+    this.watchrouter();
+    this.activeindex = sessionStorage.activeindex;
   }
 };
 </script>
@@ -150,5 +157,6 @@ export default {
   color: blue;
   margin-left: 20px;
   font-size: 14px;
+  cursor: pointer;
 }
 </style>
