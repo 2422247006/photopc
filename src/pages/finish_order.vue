@@ -28,7 +28,7 @@
             </el-input>
           </div>
         </div>
-        <div class="wrap" v-for="(i,index) of addlist">
+        <div class="wrap" v-for="(i,index) of addlist" :key="i">
           <div class="wrap_lr">
             <span v-if="index==0">化妆师</span>
             <span v-else></span>
@@ -114,7 +114,8 @@ export default {
   },
   methods: {
     addclick(){
-      this.addlist.push(1);
+      this.addlist.push(this.addlist.length);
+      console.log(this.addlist.length)
     },
     subclick() {
       this.addlist.pop();

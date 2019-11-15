@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-      <el-tab-pane  :name='item.name' :label="item.label" v-for="item of tablist" >
+      <el-tab-pane :name="item.name" :label="item.label" v-for="item of tablist">
         <div class="search">
           <el-select v-model="value" placeholder="请选择">
             <el-option
@@ -32,11 +32,11 @@
                 @click="handleDelete(scope.$index, scope.row)"
               >编辑</el-button>
               <div class="do" v-if="changeactive==scope.$index">
-                <p 
-                v-for="(item,index) of list" 
-                
-                :class="{col:changecol==index}"
-                @click="changepage(index,item.url,item.txt)">{{item.txt}}</p>
+                <p
+                  v-for="(item,index) of list"
+                  :class="{col:changecol==index}"
+                  @click="changepage(index,item.url,item.txt)"
+                >{{item.txt}}</p>
               </div>
             </template>
           </el-table-column>
@@ -56,17 +56,17 @@
 export default {
   data() {
     return {
-        changecol:-1,
+      changecol: -1,
       current: 0,
       changeactive: -1,
       activeName: "name1",
       value: "",
       input: "",
-      list:[
-          {
+      list: [
+        {
           id: 0,
           txt: "详情",
-          url:'/desc'
+          url: "/desc"
         },
         {
           id: 1,
@@ -75,7 +75,7 @@ export default {
         {
           id: 2,
           txt: "录入BS",
-          url:'/ds'
+          url: "/ds"
         },
         {
           id: 3,
@@ -84,44 +84,44 @@ export default {
         {
           id: 4,
           txt: "完成订单",
-         url:'/finish_order'
+          url: "/finish_order"
         }
       ],
       tablist: [
         {
           id: 0,
           label: "全部订单",
-          name:'name1'
+          name: "name1"
         },
         {
           id: 0,
           label: "未支付",
-           name:'name2'
+          name: "name2"
         },
         {
           id: 0,
           label: "等待拍摄",
-           name:'name3'
+          name: "name3"
         },
         {
           id: 0,
           label: "当日拍摄",
-           name:'name4'
+          name: "name4"
         },
         {
           id: 0,
           label: "拍摄中",
-           name:'name5'
+          name: "name5"
         },
         {
           id: 0,
           label: "完成",
-           name:'name6'
+          name: "name6"
         },
         {
           id: 0,
           label: "关闭",
-           name:'name7'
+          name: "name7"
         }
       ],
       tableData: [
@@ -185,11 +185,11 @@ export default {
         this.current = 0;
       }
     },
-    changepage(index,url,txt){
- this.changecol = index;
- this.$router.push({
+    changepage(index, url, txt) {
+      this.changecol = index;
+      this.$router.push({
         path: url,
-        query:{title:txt,id:1}
+        query: { title: txt, id: 1 }
       });
     }
   }
