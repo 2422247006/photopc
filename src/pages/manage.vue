@@ -160,3 +160,8 @@ export default {
   cursor: pointer;
 }
 </style>
+<style >
+.el-submenu .el-menu-item{
+  min-width:0
+}
+</style>

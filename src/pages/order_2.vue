@@ -17,12 +17,12 @@
       </div>
       <div class="desc" v-if="desc">
         <p >白色:表示可预约的时间点</p>
-        <p style="color:gray">灰色:表示已过期的时间点</p>
+        <p style="statusor:gray">灰色:表示已过期的时间点</p>
         <p>黑色:表示已预约的时间点</p>
-        <p style="color:#1989fa">蓝色:表示占位的时间点</p>
-        <p style="color:green">绿色:表示订单已完成的时间点</p>
-        <p style="color:red">红色:表示已关闭的时间点</p>
-        <p style="color:orange">橘色:表示未付款时间点</p>
+        <p style="statusor:#1989fa">蓝色:表示占位的时间点</p>
+        <p style="statusor:green">绿色:表示订单已完成的时间点</p>
+        <p style="statusor:red">红色:表示已关闭的时间点</p>
+        <p style="statusor:orange">橘色:表示未付款时间点</p>
       </div>
     </div>
     <div class="date">
@@ -57,10 +57,10 @@
       <div class="time" :style="{width:index===11?'20px':'70px'}" v-for="(i,index) of item.time">
         <div
           class="bor"
-          :style="{width:index===11?'100%':'30%',background:s.col==='0'?'black':s.col==='1'?'#1989fa':s.col==='2'?'green':s.col==='3'?'red':s.col==='4'?'#dddddd':s.col==='5'?'white':'orange'}"
-          v-for="s of i.color"
+          :style="{width:index===11?'100%':'30%',background:s.status==='0'?'black':s.status==='1'?'#1989fa':s.status==='2'?'green':s.status==='3'?'red':s.status==='4'?'#dddddd':s.status==='5'?'white':'orange'}"
+          v-for="s of i.statusor"
           :title="s.title"
-          @click="openclick(s.col)"
+          @click="openclick(s.status)"
         ></div>
       </div>
     </div>
@@ -95,198 +95,198 @@ export default {
           time: [
             {
               id: 0,
-              color: [
-                { id: 0, col: "0", title: "10:00" },
-                { id: 0, col: "1", title: "10:20" },
-                { id: 0, col: "2", title: "10:40" },
-                { id: 0, col: "3", title: "10:00" },
-                { id: 0, col: "4", title: "10:20" },
-                { id: 0, col: "5", title: "10:40" },
-                { id: 0, col: "6", title: "10:00" },
-                { id: 0, col: "3", title: "10:20" },
-                { id: 0, col: "0", title: "10:40" },
-                { id: 0, col: "1", title: "10:00" },
-                { id: 0, col: "4", title: "10:20" },
-                { id: 0, col: "3", title: "10:40" }
+              statusor: [
+                { id: 0, status: "0", title: "10:00" },
+                { id: 0,  status: "1", title: "10:20" },
+                { id: 0, status: "2", title: "10:40" },
+                { id: 0, status: "3", title: "10:00" },
+                { id: 0, status: "4", title: "10:20" },
+                { id: 0, status: "5", title: "10:40" },
+                { id: 0, status: "6", title: "10:00" },
+                { id: 0, status: "3", title: "10:20" },
+                { id: 0, status: "0", title: "10:40" },
+                { id: 0, status: "1", title: "10:00" },
+                { id: 0, status: "4", title: "10:20" },
+                { id: 0, status: "3", title: "10:40" }
               ]
             },
             {
               id: 1,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 2,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 3,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 4,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 5,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 6,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 7,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 8,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 9,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 10,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "4" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "3" },
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "4" },
-                { id: 0, col: "3" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "4" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "3" },
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "4" },
+                { id: 0, status: "3" }
               ]
             },
             {
               id: 11,
-              color: [
-                { id: 0, col: "0" },
-                { id: 0, col: "1" },
-                { id: 0, col: "2" },
-                { id: 0, col: "2" }
+              statusor: [
+                { id: 0, status: "0" },
+                { id: 0, status: "1" },
+                { id: 0, status: "2" },
+                { id: 0, status: "2" }
               ]
             }
           ]
@@ -295,108 +295,108 @@ export default {
           id: 1,
           day: "6月29日",
           time: [
-            { id: 0, color: "0" },
-            { id: 1, color: "0" },
-            { id: 2, color: "0" },
-            { id: 3, color: "0" },
-            { id: 4, color: "0" },
-            { id: 5, color: "0" },
-            { id: 6, color: "0" },
-            { id: 7, color: "0" },
-            { id: 8, color: "0" },
-            { id: 9, color: "0" },
-            { id: 10, color: "0" },
-            { id: 11, color: "0" }
+            { id: 0, statusor: "0" },
+            { id: 1, statusor: "0" },
+            { id: 2, statusor: "0" },
+            { id: 3, statusor: "0" },
+            { id: 4, statusor: "0" },
+            { id: 5, statusor: "0" },
+            { id: 6, statusor: "0" },
+            { id: 7, statusor: "0" },
+            { id: 8, statusor: "0" },
+            { id: 9, statusor: "0" },
+            { id: 10, statusor: "0" },
+            { id: 11, statusor: "0" }
           ]
         },
         {
           id: 2,
           day: "6月29日",
           time: [
-            { id: 0, color: "0" },
-            { id: 1, color: "0" },
-            { id: 2, color: "0" },
-            { id: 3, color: "0" },
-            { id: 4, color: "0" },
-            { id: 5, color: "0" },
-            { id: 6, color: "0" },
-            { id: 7, color: "0" },
-            { id: 8, color: "0" },
-            { id: 9, color: "0" },
-            { id: 10, color: "0" },
-            { id: 11, color: "0" }
+            { id: 0, statusor: "0" },
+            { id: 1, statusor: "0" },
+            { id: 2, statusor: "0" },
+            { id: 3, statusor: "0" },
+            { id: 4, statusor: "0" },
+            { id: 5, statusor: "0" },
+            { id: 6, statusor: "0" },
+            { id: 7, statusor: "0" },
+            { id: 8, statusor: "0" },
+            { id: 9, statusor: "0" },
+            { id: 10, statusor: "0" },
+            { id: 11, statusor: "0" }
           ]
         },
         {
           id: 3,
           day: "6月29日",
           time: [
-            { id: 0, color: "0" },
-            { id: 1, color: "0" },
-            { id: 2, color: "0" },
-            { id: 3, color: "0" },
-            { id: 4, color: "0" },
-            { id: 5, color: "0" },
-            { id: 6, color: "0" },
-            { id: 7, color: "0" },
-            { id: 8, color: "0" },
-            { id: 9, color: "0" },
-            { id: 10, color: "0" },
-            { id: 11, color: "0" }
+            { id: 0, statusor: "0" },
+            { id: 1, statusor: "0" },
+            { id: 2, statusor: "0" },
+            { id: 3, statusor: "0" },
+            { id: 4, statusor: "0" },
+            { id: 5, statusor: "0" },
+            { id: 6, statusor: "0" },
+            { id: 7, statusor: "0" },
+            { id: 8, statusor: "0" },
+            { id: 9, statusor: "0" },
+            { id: 10, statusor: "0" },
+            { id: 11, statusor: "0" }
           ]
         },
         {
           id: 4,
           day: "6月29日",
           time: [
-            { id: 0, color: "0" },
-            { id: 1, color: "0" },
-            { id: 2, color: "0" },
-            { id: 3, color: "0" },
-            { id: 4, color: "0" },
-            { id: 5, color: "0" },
-            { id: 6, color: "0" },
-            { id: 7, color: "0" },
-            { id: 8, color: "0" },
-            { id: 9, color: "0" },
-            { id: 10, color: "0" },
-            { id: 11, color: "0" }
+            { id: 0, statusor: "0" },
+            { id: 1, statusor: "0" },
+            { id: 2, statusor: "0" },
+            { id: 3, statusor: "0" },
+            { id: 4, statusor: "0" },
+            { id: 5, statusor: "0" },
+            { id: 6, statusor: "0" },
+            { id: 7, statusor: "0" },
+            { id: 8, statusor: "0" },
+            { id: 9, statusor: "0" },
+            { id: 10, statusor: "0" },
+            { id: 11, statusor: "0" }
           ]
         },
         {
           id: 5,
           day: "6月29日",
           time: [
-            { id: 0, color: "0" },
-            { id: 1, color: "0" },
-            { id: 2, color: "0" },
-            { id: 3, color: "0" },
-            { id: 4, color: "0" },
-            { id: 5, color: "0" },
-            { id: 6, color: "0" },
-            { id: 7, color: "0" },
-            { id: 8, color: "0" },
-            { id: 9, color: "0" },
-            { id: 10, color: "0" },
-            { id: 11, color: "0" }
+            { id: 0, statusor: "0" },
+            { id: 1, statusor: "0" },
+            { id: 2, statusor: "0" },
+            { id: 3, statusor: "0" },
+            { id: 4, statusor: "0" },
+            { id: 5, statusor: "0" },
+            { id: 6, statusor: "0" },
+            { id: 7, statusor: "0" },
+            { id: 8, statusor: "0" },
+            { id: 9, statusor: "0" },
+            { id: 10, statusor: "0" },
+            { id: 11, statusor: "0" }
           ]
         },
         {
           id: 6,
           day: "6月29日",
           time: [
-            { id: 0, color: "0" },
-            { id: 1, color: "0" },
-            { id: 2, color: "0" },
-            { id: 3, color: "0" },
-            { id: 4, color: "0" },
-            { id: 5, color: "0" },
-            { id: 6, color: "0" },
-            { id: 7, color: "0" },
-            { id: 8, color: "0" },
-            { id: 9, color: "0" },
-            { id: 10, color: "0" },
-            { id: 11, color: "0" }
+            { id: 0, statusor: "0" },
+            { id: 1, statusor: "0" },
+            { id: 2, statusor: "0" },
+            { id: 3, statusor: "0" },
+            { id: 4, statusor: "0" },
+            { id: 5, statusor: "0" },
+            { id: 6, statusor: "0" },
+            { id: 7, statusor: "0" },
+            { id: 8, statusor: "0" },
+            { id: 9, statusor: "0" },
+            { id: 10, statusor: "0" },
+            { id: 11, statusor: "0" }
           ]
         }
       ]
@@ -415,8 +415,8 @@ export default {
     detailsmouseleave(index) {
       this.changeactive = -1;
     },
-    openclick(col) {
-      if (col == 3) {
+    openclick(status) {
+      if (status == 3) {
         this.$confirm("该时间点已被人工关闭，不可对其操作", "已关闭的时间点", {
           confirmButtonText: "开放时间点",
           cancelButtonText: "取消"
@@ -426,7 +426,7 @@ export default {
             message: "已开放!"
           });
         });
-      } else if (col == 5) {
+      } else if (status == 5) {
         this.$confirm("该时间点暂无顾客预约", "空闲的时间点", {
           confirmButtonText: "添加预约",
           cancelButtonText: "关闭时间点"
@@ -443,7 +443,7 @@ export default {
               message: "已关闭"
             });
           });
-      } else if (col == 0) {
+      } else if (status == 0) {
         var aaa = "吴易凡";
         var ref='ref="print"'
         this.$confirm(
@@ -581,7 +581,7 @@ export default {
   height: 30px;
   line-height: 30px;
   font-size: 12px;
-  color: #707070;
+  statusor: #707070;
 }
 .dayl {
   width: 40%;
@@ -589,7 +589,7 @@ export default {
   background: rgb(221, 221, 221);
   font-size: 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: statusumn;
   align-items: center;
   justify-content: center;
 }
@@ -603,7 +603,7 @@ export default {
   font-size: 10px;
   font-weight: 530;
   display: flex;
-  flex-direction: column;
+  flex-direction: statusumn;
   align-items: center;
   justify-content: center;
 }
@@ -632,7 +632,7 @@ export default {
   background: red;
 }
 .more {
-  color: blue;
+  statusor: blue;
   cursor: pointer;
 }
 </style>
