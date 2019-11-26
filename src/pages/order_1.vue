@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane :name="item.name" :label="item.label" v-for="item of tablist">
         <div class="search">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="value" placeholder="请选择" @change="selecechange">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -12,17 +12,17 @@
             ></el-option>
           </el-select>
           <el-input v-model="input" placeholder="请输入搜索内容" class="inp"></el-input>
-          <el-button type="primary">查询</el-button>
+          <el-button type="primary" @click="search()">查询</el-button>
         </div>
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="id" label="订单号"></el-table-column>
-          <el-table-column prop="name" label="姓名"></el-table-column>
-          <el-table-column prop="tel" label="手机号"></el-table-column>
-          <el-table-column prop="pay" label="实际支付"></el-table-column>
-          <el-table-column prop="style" label="支付方式"></el-table-column>
-          <el-table-column prop="state" label="订单状态"></el-table-column>
-          <el-table-column prop="time" label="预约时间"></el-table-column>
-          <el-table-column prop="remarks" label="备注"></el-table-column>
+          <el-table-column prop="orderNum" label="订单号"></el-table-column>
+          <el-table-column prop="custName" label="姓名" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="custPhone" label="手机号" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="actualPay" label="实际支付" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="payType" label="支付方式" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="status" label="订单状态" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="orderDate" label="预约时间" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="remarks" label="备注" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="do" label="操作">
             <template slot-scope="scope">
               <el-button
@@ -42,10 +42,12 @@
           </el-table-column>
         </el-table>
         <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="1000"
-          style="margin:50px 0px 50px 50%;"
+          @current-change="pageChange"
+          class="pagination"
+          :page-size="10"
+          :current-page="currentPage"
+          layout="total, prev, pager, next, jumper"
+          :total="total"
         ></el-pagination>
       </el-tab-pane>
     </el-tabs>
@@ -56,10 +58,22 @@
 export default {
   data() {
     return {
+      data_getlistinfo: {
+        custName: null,
+        custPhone: null,
+        orderDate: null,
+        orderNum: null,
+        pageNum: 1,
+        pageSize: 10,
+        status: null
+      },
+      total: 0,
+      currentPage: 1, //当前页数
+      selVal: "", //选择框的类型
       changecol: -1,
       current: 0,
       changeactive: -1,
-      activeName: "name1",
+      activeName: null,
       value: "",
       input: "",
       list: [
@@ -91,91 +105,148 @@ export default {
         {
           id: 0,
           label: "全部订单",
-          name: "name1"
+          name: null
         },
         {
           id: 0,
           label: "未支付",
-          name: "name2"
+          name: "unpaid",
+      
         },
         {
           id: 0,
           label: "等待拍摄",
-          name: "name3"
+          name: "paid",
+         
         },
         {
           id: 0,
           label: "当日拍摄",
-          name: "name4"
+          name: null
+         
         },
         {
           id: 0,
           label: "拍摄中",
-          name: "name5"
+          name: "underway",
+         
         },
         {
           id: 0,
           label: "完成",
-          name: "name6"
+          name: "finish"
+         
         },
         {
           id: 0,
           label: "关闭",
-          name: "name7"
+          name: "closed"
+         
         }
       ],
-      tableData: [
-        {
-          id: 201942654236554141,
-          name: "吴亦凡",
-          tel: 15044003242,
-          pay: 688.0,
-          style: "线上微信",
-          state: "等待拍摄",
-          time: "2019-07-25",
-          remarks: "123备注",
-          do: "123"
-        },
-        {
-          id: 201942654236554141,
-          name: "吴亦凡",
-          tel: 15044003242,
-          pay: 688.0,
-          style: "线上微信",
-          state: "等待拍摄",
-          time: "2019-07-25",
-          remarks: "123备注",
-          do: "123"
-        }
-      ],
+      tableData: [],
       options: [
         {
-          value: "选项1",
-          label: "黄金糕"
+          value: "1",
+          label: "姓名"
         },
         {
-          value: "选项2",
-          label: "双皮奶"
+          value: "2",
+          label: "手机号"
         },
         {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
+          value: "3",
+          label: "订单号"
         }
       ]
     };
   },
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    //获取列表数据
+    getlistinfo() {
+      var that = this;
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/order/query", this.data_getlistinfo)
+        .then(function(res) {
+          that.total = res.data.data.total;
+          var reslist = res.data.data.dataList;
+          that.tableData = reslist.map(function(item) {
+            if (item.status == "unpaid") {
+              item.status = "未支付";
+            } else if (item.status == "paid") {
+              item.status = "等待拍摄";
+            } else if (item.status == "underway") {
+              item.status = "拍摄中";
+            } else if (item.status == "finish") {
+              item.status = "已完成";
+            } else if (item.status == "closed") {
+              item.status = "已关闭";
+            }
+            return item;
+          });
+        });
     },
+    //翻页
+    pageChange(pageChangeNum) {
+      this.data_getlistinfo.pageNum = pageChangeNum;
+      this.getlistinfo();
+    },
+    //选择框
+    selecechange(selVal) {
+      this.selVal = selVal;
+    },
+    //查询
+    search() {
+      if (this.selVal == "") {
+        this.$alert("请先选择搜索类型", "提示:", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.$message({
+              type: "info",
+              message: `action: ${action}`
+            });
+          }
+        });
+      } else if (this.selVal == 1) {
+        this.data_getlistinfo.custName = this.input;
+      } else if (this.selVal == 2) {
+        this.data_getlistinfo.custPhone = this.input;
+      } else if (this.selVal == 3) {
+        this.data_getlistinfo.orderNum = this.input;
+      }
+      console.log(this.input);
+      console.log(this.data_getlistinfo);
+      this.getlistinfo();
+    },
+    // 切换tab
+    handleClick(tab, event) {
+      console.log(tab.name);
+      console.log(tab.index);
+      if(tab.index==3){
+         this.data_getlistinfo.orderDate=this.getNowFormatDate()
+      }else{
+        this.data_getlistinfo.orderDate=null
+      }
+      this.data_getlistinfo.status=tab.name
+      console.log( this.data_getlistinfo)
+       this.getlistinfo();
+    },
+     getNowFormatDate() {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year +''+ month +''+ strDate;
+        return currentdate;
+    },
+
+
     handleDelete(index, row) {
       if (this.current == 0) {
         this.changeactive = index;
@@ -192,6 +263,10 @@ export default {
         query: { title: txt, id: 1 }
       });
     }
+  },
+  created() {
+    this.getlistinfo();
+   
   }
 };
 </script>
