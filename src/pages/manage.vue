@@ -9,7 +9,7 @@
     >
       <el-menu-item index="1">
         <i class="el-icon-s-home"></i>
-         <router-link tag="span" to='/'>概况</router-link>
+         <router-link tag="span" to='/manage'>概况</router-link>
       </el-menu-item>
 
       <el-submenu index="2">

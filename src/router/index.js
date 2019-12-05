@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import login from '@/pages/login'
 import manage from '@/pages/manage'
 import home from '@/pages/home'
 import order_1 from '@/pages/order_1'
@@ -20,6 +21,11 @@ export default new Router({
     routes: [
         {
             path: '/',
+            name: 'login',
+            component: login
+        },
+        {
+            path: '/manage',
             component: manage,
             name: 'manage',
             children: [
