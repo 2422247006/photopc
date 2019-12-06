@@ -13,6 +13,7 @@ import performancebus from '@/pages/performancebus'
 import nps from '@/pages/nps'
 import npsbus from '@/pages/npsbus'
 import npsDesc from '@/pages/npsDesc'
+import printing from '@/pages/printing'
 
 
 Vue.use(Router)
@@ -60,11 +61,18 @@ export default new Router({
                     meta: [],
                 },
                 {
+                    path: '/printing',
+                    component: printing,
+                    name: {tit:'打印订单',id:1,num:'2-1'},
+                    meta: [],
+                },
+                {
                     path: '/finish_order',
                     component: finish_order,
                     name: {tit:'完成订单',id:1,num:'2-1'},
                     meta: [],
                 },
+                
                 {
                     path: '/performance',
                     component:performance,

@@ -1,36 +1,23 @@
 <template>
   <div class="page">
     <p>
-      <span>订单号：20190658102356</span>
-      <span>用户姓名：吴亦凡</span>
+      <span>订单号：{{row.orderNum}}</span>
+      <span>用户姓名：{{row.custName}}</span>
     </p>
     <div class="picker">
       <span class="name">员工名</span>
-      <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
-      <el-select v-model="value" placeholder="请选择" style="width:30%">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select v-model="value.staffvalue" placeholder="请选择" style="width:30%">
+        <el-option v-for="item in staff" :key="item.id" :label="item.userName" :value="item.id"></el-option>
       </el-select>
     </div>
     <div class="picker">
       <span class="name">DS类型</span>
-      <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
-      <el-select v-model="value" placeholder="请选择" style="width:30%">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+      <el-select v-model="value.dstypevalue" placeholder="请选择" style="width:30%">
+        <el-option v-for="item in dsType" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
-     <div class="picker">
+    <!-- <div class="picker">
       <span class="name">DS产品</span>
-      <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
       <el-select v-model="value" placeholder="请选择" style="width:30%">
         <el-option
           v-for="item in options"
@@ -39,10 +26,10 @@
           :value="item.value"
         ></el-option>
       </el-select>
-    </div>
-     <div class="picker">
+    </div>-->
+    <!-- <div class="picker">
       <span class="name">产品SKU</span>
-      <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
+    
       <el-select v-model="value" placeholder="请选择" style="width:30%">
         <el-option
           v-for="item in options"
@@ -54,29 +41,24 @@
     </div>
     <div class="picker">
       <span class="name">拍摄人数</span>
-      <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
+    
       <el-input v-model="input" placeholder="请输入内容" style="width:30%"></el-input>
-    </div>
+    </div>-->
     <div class="picker">
       <span class="name">DS金额</span>
-      <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
-      <el-input v-model="input" placeholder="请输入内容" style="width:30%"></el-input>
+
+      <el-input v-model="value.input" placeholder="请输入内容" style="width:30%"></el-input>
     </div>
     <div class="picker">
       <span class="name">支付方式</span>
-      <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
-      <el-select v-model="value" placeholder="请选择" style="width:30%">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
+
+      <el-select v-model="value.payvalue" placeholder="请选择" style="width:30%">
+        <el-option v-for="item in pay" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
     <div class="btn">
-      <el-button type="danger" @click="open">确认录入</el-button>
-      <el-button type="success">确认录入并继续</el-button>
+      <el-button type="danger" @click="submit">确认录入</el-button>
+      <!-- <el-button type="success">确认录入并继续</el-button> -->
     </div>
   </div>
 </template>
@@ -85,37 +67,75 @@
 export default {
   data() {
     return {
-      input:'',
-      value:'',
-       options: [
+      value: {
+        input: "",
+        dstypevalue: "",
+        staffvalue: "",
+        payvalue: ""
+      },
+      row: {},
+
+      staff: [],
+      dsType: [
         {
-          value: "选项1",
-          label: "黄金糕"
+          value: "ADD",
+          label: "增拍产品"
         },
         {
-          value: "选项2",
-          label: "双皮奶"
+          value: "UPGRADE",
+          label: "升级原产品"
         },
         {
-          value: "选项3",
-          label: "蚵仔煎"
+          value: "DECORATE",
+          label: "加修加印"
         },
         {
-          value: "选项4",
-          label: "龙须面"
+          value: "STAMP",
+          label: "单独加印"
+        }
+      ],
+
+      pay: [
+        {
+          value: "ZHI_FU_BAO",
+          label: "支付宝"
         },
         {
-          value: "选项5",
-          label: "北京烤鸭"
+          value: "WEI_XIN",
+          label: "微信"
+        },
+        {
+          value: "XIAN_JIN",
+          label: "现金"
         }
       ]
     };
   },
   methods: {
-    open() {
-      this.$message("已录入");
-       this.$router.go(-1)
+    //下拉选择员工
+    getlistinfo() {
+      var that=this
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/user/employee/select")
+        .then(function(res) {
+          that.staff = res.data.data;
+        });
+    },
+    //确认录入
+    submit() {
+      var that=this
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/order/ds", that.value)
+        .then(function(res) {
+          that.$message("已录入");
+          that.$router.go(-1);
+        });
     }
+  },
+  mounted() {
+    this.row = JSON.parse(sessionStorage.getItem("orderRow"));
+    console.log(this.row);
+    this.getlistinfo();
   }
 };
 </script>

@@ -35,7 +35,7 @@
                 <p
                   v-for="(item,index) of list"
                   :class="{col:changecol==index}"
-                  @click="changepage(index,item.url,item.txt)"
+                  @click="changepage(index,item.url,item.txt,scope.row)"
                 >{{item.txt}}</p>
               </div>
             </template>
@@ -88,12 +88,13 @@ export default {
         },
         {
           id: 2,
-          txt: "录入BS",
+          txt: "录入DS",
           url: "/ds"
         },
         {
           id: 3,
-          txt: "打印订单"
+          txt: "打印订单",
+          url:"/printing"
         },
         {
           id: 4,
@@ -256,15 +257,45 @@ export default {
         this.current = 0;
       }
     },
-    changepage(index, url, txt) {
-      this.changecol = index;
-      this.$router.push({
+   
+    changepage(index, url, txt,row) {
+      var that=this
+      if(index==1){
+        var status_=''
+        if(row.status=='未支付'){
+          status_='unpaid'
+        }else if(row.status=='等待拍摄'){
+ status_='paid'
+        }else if(row.status=='拍摄中'){
+           status_='underway'
+        }else if(row.status=='已完成'){
+           status_='finish'
+        }else if(row.status=='已关闭'){
+           status_='closed'
+        }
+        that.$axios
+        .post(that.$apiUrl + "/api/v1/order/update", {
+          id:row.id,
+          status:status_
+        })
+        .then(function(res) {
+          console.log(res.data);
+          if (res.data.status == "0000") {
+            that.$message("订单开始");
+          } else {
+            that.$message(res.data.message);
+          }
+        });
+      }
+      sessionStorage.setItem("orderRow",JSON.stringify(row));
+      that.changecol = index;
+      that.$router.push({
         path: url,
-        query: { title: txt, id: 1 }
+        query: { title: txt, id: 1,row:row}
       });
     }
   },
-  created() {
+  activated() {
     this.getlistinfo();
    
   }

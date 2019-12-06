@@ -12,12 +12,18 @@
             <el-button
               type="primary"
               style="height:20px;line-height:0px;width:60px;padding:5px;text-algin:center;font-size:10px;"
+              @click="changesj"
             >提交修改</el-button>
           </p>
           <div class="l_picker">
-            <el-date-picker v-model="value1" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker
+              value-format="yyyyMMdd"
+              v-model="changetime.orderDate"
+              type="date"
+              placeholder="选择日期"
+            ></el-date-picker>
             <el-time-select
-              v-model="value"
+              v-model="changetime.orderTime"
               :picker-options="{start: '08:30',step: '00:15',end: '18:30'}"
               placeholder="选择时间"
             ></el-time-select>
@@ -29,15 +35,19 @@
             <el-button
               type="primary"
               style="height:20px;line-height:0px;width:60px;padding:5px;text-algin:center;font-size:10px;"
+              @click="changecustinfo"
             >提交修改</el-button>
           </p>
           <div class="inpwrap">
             <span>用户姓名</span>
-            <input v-model="info" placeholder="吴易凡" class="r-inp" />
+            <input v-model=" changecust.custName" placeholder="请填写姓名" class="r-inp" />
           </div>
           <div class="inpwrap">
             <span>顾客性别</span>
-            <input v-model="sex" placeholder="女" class="r-inp" />
+            <div style="width:80%;">
+              <el-radio v-model="changecust.custSex" label="男">男</el-radio>
+              <el-radio v-model="changecust.custSex" label="女">女</el-radio>
+            </div>
           </div>
         </div>
         <div class="r_box">
@@ -46,41 +56,17 @@
             <el-button
               type="primary"
               style="height:20px;line-height:0px;width:60px;padding:5px;text-algin:center;font-size:10px;"
+               @click="changeremark_()"
             >提交修改</el-button>
           </p>
-          <textarea></textarea>
-        </div>
-        <div class="r_box">
-          <p class="r_tit">
-            <span>修改拍摄内容(仅限证件照和签证照的修改)</span>
-            <el-button
-              type="primary"
-              style="height:20px;line-height:0px;width:60px;padding:5px;text-algin:center;font-size:10px;"
-            >提交修改</el-button>
-          </p>
-          <div class="r_picker">
-            <span>原拍摄内容</span>
-            <!-- v-model的值为当前被选中的el-option的 value 属性值 -->
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </div>
-          <div class="r_picker">
-            <span>修改为</span>
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </div>
+
+          <el-input
+            type="textarea"
+            placeholder="请输入内容"
+            maxlength="100"
+            show-word-limit
+            v-model="changeremark.remark"
+          ></el-input>
         </div>
       </div>
     </div>
@@ -94,10 +80,25 @@ export default {
   },
   data() {
     return {
-      info:'',
-      sex:'',
-      value1:'',
-      value:'',
+      listinfo:{},
+      changetime: {
+        id: "",
+        orderDate: "",
+        orderTime: ""
+      },
+      changecust: {
+        id: "",
+        custName: "",
+        custSex: ""
+      },
+      changeremark: {
+        id: "",
+        remark: ""
+      },
+      info: "",
+      sex: "",
+      value1: "",
+      value: "",
       options: [
         {
           value: "选项1",
@@ -121,6 +122,58 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    changesj() {
+      var that = this;
+      that.changetime.id = that.row.id;
+      that.$axios
+        .get(that.$apiUrl + "/api/v1/order/modify/date", {
+          params: that.changetime
+        })
+        .then(function(res) {
+          // console.log(res.data);
+          if (res.data.status == 200) {
+            that.$message("已修改");
+          } else {
+            that.$message(res.data.message);
+          }
+        });
+    },
+    changecustinfo() {
+      var that = this;
+      that.changecust.id = that.row.id;
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/order/modify/cust", that.changecust)
+        .then(function(res) {
+          // console.log(res.data);
+          if (res.data.status == "0000") {
+            that.$message("已修改");
+          } else {
+            that.$message(res.data.message);
+          }
+        });
+    },
+    changeremark_() {
+      var that = this;
+      that.changeremark.id = that.row.id;
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/order/modify/remark", that.changeremark)
+        .then(function(res) {
+          // console.log(res.data);
+          if (res.data.status == "0000") {
+            that.$message("已修改");
+          } else {
+            that.$message(res.data.message);
+          }
+        });
+    },
+   
+  },
+  created() {
+    this.row = JSON.parse(sessionStorage.getItem("orderRow"));
+    // console.log(this.row);
+    // this.getlistinfo();
   }
 };
 </script>

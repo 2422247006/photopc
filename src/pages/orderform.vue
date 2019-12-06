@@ -4,20 +4,20 @@
       <p class="title">顾客信息</p>
       <div class="inpwrap">
         <span>用户姓名</span>
-        <input v-model="info" disabled="disabled" class="inp" />
+        <input v-model="listinfo.custName" disabled="disabled" class="inp" />
       </div>
       <div class="inpwrap">
         <span>顾客性别</span>
-        <input v-model="sex" disabled="disabled" class="inp" />
+        <input v-model="listinfo.custSex" disabled="disabled" class="inp" />
       </div>
       <div class="inpwrap">
         <span>联系方式</span>
-        <input v-model="tel" disabled="disabled" class="inp" />
+        <input v-model="listinfo.custPhone" disabled="disabled" class="inp" />
       </div>
-      <div class="inpwrap">
+      <!-- <div class="inpwrap">
         <span>顾客生日</span>
         <input v-model="birth" disabled="disabled" class="inp" />
-      </div>
+      </div>-->
     </div>
     <div>
       <p class="title">拍摄内容(不含ds)</p>
@@ -27,10 +27,10 @@
           <span class="span">拍摄人数</span>
           <span class="span">产品单价(元)</span>
         </p>
-        <p class="tr table">
-          <span class="span">花颜照-单人-绮罗</span>
-          <span class="span">1</span>
-          <span class="span">399</span>
+        <p class="tr table" v-for="item of productList" :key="item.id">
+          <span class="span">{{item.productName}}</span>
+          <span class="span">{{item.productCombo}}</span>
+          <span class="span">{{item.actualPay}}</span>
         </p>
       </div>
     </div>
@@ -45,9 +45,9 @@
           <span class="span ds_span">ds金额(元)</span>
           <span class="span ds_span">支付方式</span>
         </p>
-        <p class="tr table">
-          <span class="span ds_span">吴亦凡</span>
-          <span class="span ds_span">花颜照-单人-绮罗</span>
+        <p class="tr table" v-for="item of orderDsList">
+          <span class="span ds_span">{{}}</span>
+          <span class="span ds_span">{{}}</span>
           <span class="span ds_span">证件照-红底-2寸</span>
           <span class="span ds_span">结婚照-蓝底</span>
           <span class="span ds_span">299</span>
@@ -63,19 +63,19 @@
       </div>
       <div class="inpwrap">
         <span>预约时间</span>
-        <input v-model="order2" disabled="disabled" class="inp" />
+        <input v-model="listinfo.orderTime" disabled="disabled" class="inp" />
       </div>
       <div class="inpwrap">
         <span>订单状态</span>
-        <input v-model="order3" disabled="disabled" class="inp" />
+        <input v-model="listinfo.status" disabled="disabled" class="inp" />
       </div>
       <div class="inpwrap">
         <span>已付金额</span>
-        <input v-model="order4" disabled="disabled" class="inp" />
+        <input v-model="listinfo.actualPay" disabled="disabled" class="inp" />
       </div>
       <div class="inpwrap">
         <span>支付方式</span>
-        <input v-model="order5" disabled="disabled" class="inp" />
+        <input v-model="listinfo.payType" disabled="disabled" class="inp" />
       </div>
       <div class="inpwrap">
         <span>订单类型</span>
@@ -83,7 +83,7 @@
       </div>
       <div class="inpwrap">
         <span>订单备注</span>
-        <input v-model="order7" disabled="disabled" class="inp" />
+        <input v-model="listinfo.remark" disabled="disabled" class="inp" />
       </div>
     </div>
   </div>
@@ -94,6 +94,10 @@ export default {
   name: "orderform",
   data() {
     return {
+      listinfo: {},
+      productList: [],
+      orderDsList: [],
+      row: "",
       info: "吴亦凡",
       sex: "女",
       tel: "15044003242",
@@ -108,6 +112,30 @@ export default {
       value1: "", //选择日期
       value: "" //时间
     };
+  },
+  methods: {
+     //获取详情表单
+    getlistinfo() {
+      var that = this;
+      that.$axios
+        .get(that.$apiUrl + "/api/v1/order/detail", {
+          params: {
+            id: that.row.id
+          }
+        })
+        .then(function(res) {
+          // console.log(res.data.data);
+          that.listinfo = res.data.data;
+          that.productList=res.data.data.productList
+          that.orderDsList=res.data.data.orderDsList
+        });
+    }
+  },
+  created() {
+   this.row = JSON.parse(sessionStorage.getItem("orderRow"));
+    // console.log(this.row);
+    this.getlistinfo()
+    //  console.log(this.listinfo_)
   }
 };
 </script>
