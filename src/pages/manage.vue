@@ -48,6 +48,9 @@
              <router-link tag="span" to='/npsbus'>门店NPS统计</router-link>
           </el-menu-item>
         </el-submenu>
+          <el-menu-item index="3-2">
+            <router-link tag="span" to='/addyg'>新增员工</router-link>
+            </el-menu-item>
       </el-submenu>
       <el-submenu index="4">
         <template slot="title">

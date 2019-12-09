@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="left">
-      <orderform></orderform>
+      <orderform @childFn="parentFn"></orderform>
     </div>
     <div class="right">
       <div class="r_con">
@@ -21,6 +21,7 @@
               v-model="changetime.orderDate"
               type="date"
               placeholder="选择日期"
+              @change="cccc"
             ></el-date-picker>
             <el-time-select
               v-model="changetime.orderTime"
@@ -40,7 +41,7 @@
           </p>
           <div class="inpwrap">
             <span>用户姓名</span>
-            <input v-model=" changecust.custName" placeholder="请填写姓名" class="r-inp" />
+            <input v-model="changecust.custName" placeholder="请填写姓名" class="r-inp" />
           </div>
           <div class="inpwrap">
             <span>顾客性别</span>
@@ -56,7 +57,7 @@
             <el-button
               type="primary"
               style="height:20px;line-height:0px;width:60px;padding:5px;text-algin:center;font-size:10px;"
-               @click="changeremark_()"
+              @click="changeremark_()"
             >提交修改</el-button>
           </p>
 
@@ -80,7 +81,7 @@ export default {
   },
   data() {
     return {
-      listinfo:{},
+      listinfo: {},
       changetime: {
         id: "",
         orderDate: "",
@@ -120,16 +121,23 @@ export default {
           value: "选项5",
           label: "北京烤鸭"
         }
-      ]
+      ],
+      payload: {}
     };
   },
   methods: {
+    cccc() {
+      console.log(this.changetime.orderDate);
+    },
     changesj() {
       var that = this;
-      that.changetime.id = that.row.id;
       that.$axios
         .get(that.$apiUrl + "/api/v1/order/modify/date", {
-          params: that.changetime
+          params: {
+            orderDate: that.changetime.orderDate,
+            orderTime: that.changetime.orderTime,
+            id: that.changetime.id
+          }
         })
         .then(function(res) {
           // console.log(res.data);
@@ -142,9 +150,14 @@ export default {
     },
     changecustinfo() {
       var that = this;
-      that.changecust.id = that.row.id;
       that.$axios
-        .post(that.$apiUrl + "/api/v1/order/modify/cust", that.changecust)
+        .get(that.$apiUrl + "/api/v1/order/modify/cust", {
+          params: {
+            custName: that.changecust.custName,
+            custSex: that.changecust.custSex,
+            id: that.changecust.id
+          }
+        })
         .then(function(res) {
           // console.log(res.data);
           if (res.data.status == "0000") {
@@ -156,9 +169,13 @@ export default {
     },
     changeremark_() {
       var that = this;
-      that.changeremark.id = that.row.id;
       that.$axios
-        .post(that.$apiUrl + "/api/v1/order/modify/remark", that.changeremark)
+        .get(that.$apiUrl + "/api/v1/order/modify/remark", {
+          params: {
+            id: that.changeremark.id,
+            remark: that.changeremark.remark
+          }
+        })
         .then(function(res) {
           // console.log(res.data);
           if (res.data.status == "0000") {
@@ -168,10 +185,27 @@ export default {
           }
         });
     },
-   
+    parentFn(payload) {
+      console.log(payload.id+'哈哈');
+      this.changecust.id = payload.id;
+      this.changecust.custName = payload.custName;
+      this.changecust.custSex = payload.custSex;
+      this.changecust.custSex = payload.custSex;
+      this.changeremark.id = payload.id;
+      this.changeremark.remark = payload.remark;
+      this.changetime.id = payload.id;
+      if (payload.orderDate !==null) {
+        var aaa = payload.orderDate.toString();
+        aaa = aaa.slice(0, 4) + "-" + aaa.slice(4);
+        aaa = aaa.slice(0, 7) + "-" + aaa.slice(7);
+        this.changetime.orderDate = new Date(aaa);
+      }
+
+      this.changetime.orderTime = payload.orderTime;
+    }
   },
   created() {
-    this.row = JSON.parse(sessionStorage.getItem("orderRow"));
+    // this.row = JSON.parse(sessionStorage.getItem("orderRow"));
     // console.log(this.row);
     // this.getlistinfo();
   }

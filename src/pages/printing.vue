@@ -11,10 +11,10 @@
             <span>姓名:</span>
             <span>{{listinfo.custName}}</span>
           </p>
-          <p>
+          <!-- <p>
             <span>生日:</span>
             <span></span>
-          </p>
+          </p> -->
           <p>
             <span>联系方式:</span>
             <span>{{listinfo.custPhone}}</span>
@@ -36,7 +36,7 @@
           </p>
           <p>
             <span>预约时间:</span>
-            <span>{{listinfo.orderTime}}</span>
+            <span>{{yyDate}}</span>
           </p>
           <p>
             <span>拍摄套系:</span>
@@ -92,7 +92,8 @@ export default {
       row:'',
       listinfo:{
           productList:{}
-      }
+      },
+      yyDate:''
     };
   },
   methods:{
@@ -107,11 +108,16 @@ getinfo() {
         .then(function(res) {
           console.log(res.data.data);
           that.listinfo = res.data.data;
+           var aaa = that.listinfo.orderDate.toString();
+          aaa = aaa.slice(0, 4) + "-" + aaa.slice(4);
+          aaa = aaa.slice(0, 7) + "-" + aaa.slice(7);
+          that.yyDate = aaa + that.listinfo.orderTime;
         });
     }
   },
   mounted() {
         this.row = JSON.parse(sessionStorage.getItem("orderRow"));
+        this.getinfo()
   },
 };
 </script>

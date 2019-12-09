@@ -7,28 +7,30 @@
       <p class="title">录入工作量</p>
       <div class="r_box">
         <p class="r_tit">
-          <el-button type="primary" style="height:25px;line-height:0px;">完成订单</el-button>
+          <el-button type="primary" @click="finish" style="height:25px;line-height:0px;">完成订单</el-button>
         </p>
-        <div class="wrap">
+        <div class="wrap" v-for="(item,index) of newselectlist" :key="item.id">
           <div class="wrap_lr">
-            <span>前台</span>
-            <el-select v-model="value" placeholder="请选择" style="width:70%;">
+            <span>员工</span>
+            <el-select v-model="item.employeeId" placeholder="请选择" style="width:70%;">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in ygoptions"
+                :key="item.id"
+                :label="item.userName"
+                :value="item.id"
               ></el-option>
             </el-select>
           </div>
           <div class="wrap_lr">
             <span>工作量</span>
-            <el-input placeholder="100.00" v-model="input2" style="width:70%;">
+            <el-input placeholder="100.00" v-model="item.jobAmount" style="width:70%;">
               <template slot="append">%</template>
             </el-input>
           </div>
+          <el-button v-if="index==0" type="primary" size="small" @click="addclick">新增</el-button>
+           <el-button v-if="index!==0" type="primary" size="small" @click="deleteclick(index)">删除</el-button>
         </div>
-        <div class="wrap" v-for="(i,index) of addlist" :key="i">
+        <!-- <div class="wrap" v-for="(i,index) of addlist" :key="i">
           <div class="wrap_lr">
             <span v-if="index==0">化妆师</span>
             <span v-else></span>
@@ -49,8 +51,8 @@
           </div>
           <img v-if="index==0" src="../assets/icon/add.png" @click="addclick" />
           <img v-else src="../assets/icon/sub.png" @click="subclick" />
-        </div>
-        <div class="wrap" v-for="(s,index) of addlist2">
+        </div> -->
+        <!-- <div class="wrap" v-for="(s,index) of addlist2">
           <div class="wrap_lr">
             <span v-if="index==0">摄影师</span>
             <span v-else></span>
@@ -71,8 +73,8 @@
           </div>
           <img v-if="index==0" src="../assets/icon/add.png"  @click="addclick2"/>
            <img v-else src="../assets/icon/sub.png" @click="subclick2" />
-        </div>
-      </div>
+        </div>-->
+      </div> 
     </div>
   </div>
 </template>
@@ -84,38 +86,24 @@ export default {
   },
   data() {
     return {
-        input2:'',
-        value:'',
+      ygvalue:'',
+        gzvalue:'',
       addlist: [0],
        addlist2: [0],
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
-      ]
+      ygoptions: [],
+      newselectlist:[{employeeId:'',jobAmount:''}],
+      row:''
     };
   },
   methods: {
+    //新增
     addclick(){
-      this.addlist.push(this.addlist.length);
-      console.log(this.addlist.length)
+      this.newselectlist.push({employeeId:'',jobAmount:''});
+      console.log(this.newselectlist)
+    },
+    //删除
+    deleteclick(index){
+this.newselectlist.splice(index,1);
     },
     subclick() {
       this.addlist.pop();
@@ -126,6 +114,40 @@ export default {
     subclick2() {
       this.addlist2.pop();
     },
+    //下拉选择员工
+    getlistinfo() {
+      var that=this
+      
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/user/employee/select")
+        .then(function(res) {
+          console.log(res.data.data)
+          that.ygoptions = res.data.data;
+        });
+    },
+    finish(){
+      var that=this
+      var list=that.newselectlist.map(function(item){
+       item.jobAmount=parseInt(item.jobAmount)
+        return item
+      })
+    that.$axios
+        .post(that.$apiUrl + "/api/v1/order",{
+          orderId:that.row.id,
+          workloadList:list
+        })
+        .then(function(res) {
+            if (res.data.status == "0000") {
+            that.$message("已完成");
+          } else {
+            that.$message(res.data.message);
+          }
+        });
+    }
+  },
+  created(){
+     this.row = JSON.parse(sessionStorage.getItem("orderRow"));
+     this.getlistinfo()
   }
 };
 </script>

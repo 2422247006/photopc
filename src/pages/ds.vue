@@ -6,27 +6,20 @@
     </p>
     <div class="picker">
       <span class="name">员工名</span>
-      <el-select v-model="value.staffvalue" placeholder="请选择" style="width:30%">
+      <el-select v-model="value.employeeId" placeholder="请选择" style="width:30%">
         <el-option v-for="item in staff" :key="item.id" :label="item.userName" :value="item.id"></el-option>
       </el-select>
     </div>
     <div class="picker">
       <span class="name">DS类型</span>
-      <el-select v-model="value.dstypevalue" placeholder="请选择" style="width:30%">
+      <el-select v-model="value.dsType" placeholder="请选择" style="width:30%">
         <el-option v-for="item in dsType" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
-    <!-- <div class="picker">
+    <div class="picker" v-if="value.dsType=='ADD'">
       <span class="name">DS产品</span>
-      <el-select v-model="value" placeholder="请选择" style="width:30%">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        ></el-option>
-      </el-select>
-    </div>-->
+      <el-input v-model="value.dsProduct" placeholder="请输入内容" style="width:30%"></el-input>
+    </div>
     <!-- <div class="picker">
       <span class="name">产品SKU</span>
     
@@ -47,12 +40,12 @@
     <div class="picker">
       <span class="name">DS金额</span>
 
-      <el-input v-model="value.input" placeholder="请输入内容" style="width:30%"></el-input>
+      <el-input v-model="value.dsAmount" placeholder="请输入内容" style="width:30%"></el-input>
     </div>
     <div class="picker">
       <span class="name">支付方式</span>
 
-      <el-select v-model="value.payvalue" placeholder="请选择" style="width:30%">
+      <el-select v-model="value.payType" placeholder="请选择" style="width:30%">
         <el-option v-for="item in pay" :key="item.value" :label="item.label" :value="item.value"></el-option>
       </el-select>
     </div>
@@ -68,10 +61,12 @@ export default {
   data() {
     return {
       value: {
-        input: "",
-        dstypevalue: "",
-        staffvalue: "",
-        payvalue: ""
+        orderId: "",
+        dsAmount: "",
+        dsType: "",
+        employeeId: "",
+        payType: "",
+        dsProduct:''
       },
       row: {},
 
@@ -114,7 +109,8 @@ export default {
   methods: {
     //下拉选择员工
     getlistinfo() {
-      var that=this
+      var that = this;
+      that.value.orderId=that.row.id
       that.$axios
         .post(that.$apiUrl + "/api/v1/user/employee/select")
         .then(function(res) {
@@ -123,7 +119,7 @@ export default {
     },
     //确认录入
     submit() {
-      var that=this
+      var that = this;
       that.$axios
         .post(that.$apiUrl + "/api/v1/order/ds", that.value)
         .then(function(res) {

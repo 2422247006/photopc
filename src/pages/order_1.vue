@@ -3,7 +3,7 @@
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane :name="item.name" :label="item.label" v-for="item of tablist">
         <div class="search">
-          <el-select v-model="value" placeholder="请选择" @change="selecechange">
+          <el-select v-model="value" clearable placeholder="请选择" @change="selecechange">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -19,7 +19,13 @@
           <el-table-column prop="custName" label="姓名" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="custPhone" label="手机号" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="actualPay" label="实际支付" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="payType" label="支付方式" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column label="支付方式" :show-overflow-tooltip="true">
+            <template slot-scope="scope">
+              <span v-if="scope.row.payType=='ZHI_FU_BAO'">支付宝</span>
+              <span v-if="scope.row.payType=='WEI_XIN'">微信</span>
+              <span v-if="scope.row.payType=='XIAN_JIN'">现金</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="status" label="订单状态" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="orderDate" label="预约时间" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="remarks" label="备注" :show-overflow-tooltip="true"></el-table-column>
@@ -36,6 +42,7 @@
                   v-for="(item,index) of list"
                   :class="{col:changecol==index}"
                   @click="changepage(index,item.url,item.txt,scope.row)"
+                  :key="item.id"
                 >{{item.txt}}</p>
               </div>
             </template>
@@ -94,7 +101,7 @@ export default {
         {
           id: 3,
           txt: "打印订单",
-          url:"/printing"
+          url: "/printing"
         },
         {
           id: 4,
@@ -111,38 +118,32 @@ export default {
         {
           id: 0,
           label: "未支付",
-          name: "unpaid",
-      
+          name: "unpaid"
         },
         {
           id: 0,
           label: "等待拍摄",
-          name: "paid",
-         
+          name: "paid"
         },
         {
           id: 0,
           label: "当日拍摄",
           name: null
-         
         },
         {
           id: 0,
           label: "拍摄中",
-          name: "underway",
-         
+          name: "underway"
         },
         {
           id: 0,
           label: "完成",
           name: "finish"
-         
         },
         {
           id: 0,
           label: "关闭",
           name: "closed"
-         
         }
       ],
       tableData: [],
@@ -198,55 +199,62 @@ export default {
     },
     //查询
     search() {
-      if (this.selVal == "") {
-        this.$alert("请先选择搜索类型", "提示:", {
-          confirmButtonText: "确定",
-          callback: action => {
-            this.$message({
-              type: "info",
-              message: `action: ${action}`
-            });
-          }
-        });
-      } else if (this.selVal == 1) {
+      // if (this.selVal == 1) {
+      //   this.data_getlistinfo.custName = this.input;
+      // } else if (this.selVal == 2) {
+      //   this.data_getlistinfo.custPhone = this.input;
+      // } else if (this.selVal == 3) {
+      //   this.data_getlistinfo.orderNum = this.input;
+      // }else if(this.selVal == ""&&this.input==''){
+      // this.getlistinfo();
+      // }
+//       if(this.selVal == ""&&this.input==''){
+//         alert(123)
+//  this.getlistinfo();
+//       }  
+      if (this.selVal == 1) {
         this.data_getlistinfo.custName = this.input;
       } else if (this.selVal == 2) {
         this.data_getlistinfo.custPhone = this.input;
       } else if (this.selVal == 3) {
         this.data_getlistinfo.orderNum = this.input;
-      }
-      console.log(this.input);
-      console.log(this.data_getlistinfo);
+      }else if(this.selVal == ""&&this.input==''){ 
+        this.data_getlistinfo.custName = null;
       this.getlistinfo();
+      }
+      this.getlistinfo();
+     
+      
+     
+
     },
     // 切换tab
     handleClick(tab, event) {
       console.log(tab.name);
       console.log(tab.index);
-      if(tab.index==3){
-         this.data_getlistinfo.orderDate=this.getNowFormatDate()
-      }else{
-        this.data_getlistinfo.orderDate=null
+      if (tab.index == 3) {
+        this.data_getlistinfo.orderDate = this.getNowFormatDate();
+      } else {
+        this.data_getlistinfo.orderDate = null;
       }
-      this.data_getlistinfo.status=tab.name
-      console.log( this.data_getlistinfo)
-       this.getlistinfo();
+      this.data_getlistinfo.status = tab.name;
+      console.log(this.data_getlistinfo);
+      this.getlistinfo();
     },
-     getNowFormatDate() {
-        var date = new Date();
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var strDate = date.getDate();
-        if (month >= 1 && month <= 9) {
-            month = "0" + month;
-        }
-        if (strDate >= 0 && strDate <= 9) {
-            strDate = "0" + strDate;
-        }
-        var currentdate = year +''+ month +''+ strDate;
-        return currentdate;
+    getNowFormatDate() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + "" + month + "" + strDate;
+      return currentdate;
     },
-
 
     handleDelete(index, row) {
       if (this.current == 0) {
@@ -257,47 +265,47 @@ export default {
         this.current = 0;
       }
     },
-   
-    changepage(index, url, txt,row) {
-      var that=this
-      if(index==1){
-        var status_=''
-        if(row.status=='未支付'){
-          status_='unpaid'
-        }else if(row.status=='等待拍摄'){
- status_='paid'
-        }else if(row.status=='拍摄中'){
-           status_='underway'
-        }else if(row.status=='已完成'){
-           status_='finish'
-        }else if(row.status=='已关闭'){
-           status_='closed'
+
+    changepage(index, url, txt, row) {
+      console.log(row)
+      var that = this;
+      if (index == 1) {
+        var status_ = "";
+        if (row.status == "未支付") {
+          status_ = "unpaid";
+        } else if (row.status == "等待拍摄") {
+          status_ = "paid";
+        } else if (row.status == "拍摄中") {
+          status_ = "underway";
+        } else if (row.status == "已完成") {
+          status_ = "finish";
+        } else if (row.status == "已关闭") {
+          status_ = "closed";
         }
         that.$axios
-        .post(that.$apiUrl + "/api/v1/order/update", {
-          id:row.id,
-          status:status_
-        })
-        .then(function(res) {
-          console.log(res.data);
-          if (res.data.status == "0000") {
-            that.$message("订单开始");
-          } else {
-            that.$message(res.data.message);
-          }
-        });
+          .post(that.$apiUrl + "/api/v1/order/update", {
+            id: row.id,
+            status: status_
+          })
+          .then(function(res) {
+            console.log(res.data);
+            if (res.data.status == "0000") {
+              that.$message("订单开始");
+            } else {
+              that.$message(res.data.message);
+            }
+          });
       }
-      sessionStorage.setItem("orderRow",JSON.stringify(row));
+      sessionStorage.setItem("orderRow", JSON.stringify(row));
       that.changecol = index;
       that.$router.push({
         path: url,
-        query: { title: txt, id: 1,row:row}
+        query: { title: txt, id: 1, row: row }
       });
     }
   },
   activated() {
     this.getlistinfo();
-   
   }
 };
 </script>
