@@ -41,18 +41,18 @@
           <el-menu-item index="3-1-2">
                <router-link tag="span" to='/performancebus'>门店绩效查询</router-link>
           </el-menu-item>
-          <el-menu-item index="3-1-3">
+          <!-- <el-menu-item index="3-1-3">
            <router-link tag="span" to='/nps'>个人NPS统计</router-link>
             </el-menu-item>
           <el-menu-item index="3-1-4">
              <router-link tag="span" to='/npsbus'>门店NPS统计</router-link>
-          </el-menu-item>
+          </el-menu-item> -->
         </el-submenu>
           <el-menu-item index="3-2">
             <router-link tag="span" to='/addyg'>新增员工</router-link>
             </el-menu-item>
       </el-submenu>
-      <el-submenu index="4">
+      <!-- <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-s-data"></i>
           <span>财务管理</span>
@@ -69,7 +69,7 @@
           <el-menu-item index="4-2-3">线下收入统计</el-menu-item>
           <el-menu-item index="4-2-4">线下收入录入</el-menu-item>
         </el-submenu>
-      </el-submenu>
+      </el-submenu> -->
     </el-menu>
     <div class="con">
       <div class="header">

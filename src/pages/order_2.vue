@@ -11,10 +11,10 @@
       <div class="headerdiv div8" @mouseover="descmouseover" @mouseleave="descmouseleave">
         <img src="../assets/icon/why.png" style="width:100%;height:100%;background:none" />
       </div>
-      <div style="margin-left:30%;">
+      <!-- <div style="margin-left:30%;">
         <el-button type="primary">《前七天</el-button>
         <el-button type="primary">后七天》</el-button>
-      </div>
+      </div> -->
       <div class="desc" v-if="desc">
         <p>白色:表示可预约的时间点</p>
         <p style="statusor:gray">灰色:表示已过期的时间点</p>
@@ -39,13 +39,13 @@
       <div class="left">
         <div class="dayl">
           <p>{{item.date}}</p>
-          <p>周六</p>
+          <!-- <p>周六</p> -->
         </div>
-        <div class="dayr">
+        <!-- <div class="dayr">
           <p>可用总量:36</p>
           <p>可用余量:0</p>
           <p class="more" @mouseover="detailsmouseover(index)" @mouseleave="detailsmouseleave">详情</p>
-        </div>
+        </div> -->
         <div class="details" v-if="changeactive==index">
           <p class="p1">6月19日预约产品数量(包含未付款)</p>
           <p class="p2">总计：40</p>
@@ -444,7 +444,7 @@ export default {
         this.status_='closed'
         //白
         this.$confirm("该时间点暂无顾客预约", "空闲的时间点", {
-          confirmButtonText: "添加预约",
+          // confirmButtonText: "添加预约",
           cancelButtonText: "关闭时间点"
         })
           .then(() => {
@@ -522,7 +522,7 @@ export default {
       const year = `${time.getFullYear()}`;
       const month = `0${time.getMonth() + 1}`.slice(-2);
       const week = `${time.getDay()}`.slice(-2);
-      const weekday = weeklist[week];
+      // const weekday = weeklist[week];
       const strDate = `0${time.getDate()}`.slice(-2);
       // temp.push(`${weekday}${month}月${strDate}日`);
       onyear.push(`${year}${month}${strDate}`);
@@ -668,7 +668,7 @@ export default {
   color: #707070;
 }
 .dayl {
-  width: 40%;
+  width: 100%;
   height: 80px;
   background: rgb(221, 221, 221);
   font-size: 10px;

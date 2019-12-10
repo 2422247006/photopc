@@ -75,35 +75,35 @@ export default {
       tablelist:[
           {
               name:'总业绩',
-              num:'59823.00'
+              num:''
           },
           {
               name:'订单+共享DS金额',
-              num:'59823.00'
+              num:''
           },
           {
               name:'修正金额',
-              num:'59823.00'
+              num:''
           },
           {
               name:'主推DS比例',
-              num:'59823.00'
+              num:''
           },
           {
               name:'主推DS金额',
-              num:'59823.00'
+              num:''
           },
           {
               name:'满意度',
-              num:'59823.00'
+              num:''
           },
           {
               name:'满意度比例',
-              num:'非常满意：50，基本满意：20，不满意：0'
+              num:''
           },
           {
               name:'ps',
-              num:'59823.00'
+              num:''
           }
       ]
     };
