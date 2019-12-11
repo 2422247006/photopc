@@ -35,7 +35,7 @@
     </div>
     <div class="block">
       <span class="span">席位</span>
-      <el-select v-model="value" placeholder="请选择">
+      <el-select v-model="valuenum" placeholder="请选择">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -44,9 +44,20 @@
         ></el-option>
       </el-select>
     </div>
+     <div class="block">
+      <span class="span">操作</span>
+      <el-select v-model="valuedo" placeholder="请选择">
+        <el-option
+          v-for="item in dooptions"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+    </div>
+   
 
-    <el-button type="primary" @click="submitfalse" style="margin-left:10%;margin-top:30px;">确认关闭</el-button>
-    <el-button type="success" @click="submittrue" style="margin-top:30px;">确认打开</el-button>
+    <el-button type="primary" @click="submit" style="margin-left:10%;margin-top:30px;">确认</el-button>
   </div>
 </template>
 
@@ -57,8 +68,8 @@ export default {
       date: [],
       startTime: "",
       endTime: "",
-      value: "",
-      openSchedule:false,
+      valuenum: "",
+      valuedo:'true',
       options: [
         {
           value: "1",
@@ -76,6 +87,16 @@ export default {
           value: "4",
           label: "4"
         }
+      ],
+       dooptions: [
+        {
+          value: "true",
+          label: "批量打开"
+        },
+        {
+          value: "false",
+          label: "批量关闭"
+        }
       ]
     };
   },
@@ -89,32 +110,24 @@ export default {
     time2() {
       console.log(this.endTime);
     },
-    submitfalse() {
-      this.openSchedule = false;
-      this.getinfo();
-    },
-    submittrue() {
-      this.openSchedule = true;
-      this.getinfo();
-    },
-    getinfo() {
+    submit() {
       var that = this;
       that.$axios
         .post(that.$apiUrl + "/api/v1/schedule/close", {
-          closeDateList: that.date,
-          timeBegin: that.startTime,
-          timeEnd: that.endTime,
-          closeNum: that.value,
-          openSchedule: that.openSchedule
+             closeDateList:that.date,
+              timeBegin:that.startTime,
+              timeEnd:that.endTime,
+            closeNum:that.value,
+            openSchedule:that.valuedo
         })
         .then(function(res) {
           if (res.data.status == "0000") {
             that.$message.success("操作成功");
-            (that.date = []),
-              (that.startTime = ""),
-              (that.endTime = ""),
-              (that.value = "");
-            that.openSchedule = "";
+            that.date = [],
+              that.startTime = "",
+              that.endTime = "",
+            that.value = "",
+            that.valuedo=''
           } else {
             that.$message.error("请完整填写");
           }

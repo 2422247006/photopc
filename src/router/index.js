@@ -53,7 +53,7 @@ export default new Router({
                 {
                     path: '/closeorder',
                     component: closeorder,
-                    name: {tit:'批量操作排单',id:1,num:'2-3'},
+                    name: {tit:'批量操作排单',id:0,num:'2-3'},
                     meta: [],
                 },
                 {
@@ -83,7 +83,7 @@ export default new Router({
                 {
                     path: '/addyg',
                     component:addyg,
-                    name: {tit:'新增员工',id:1,num:'3-2'},
+                    name: {tit:'新增员工',id:0,num:'3-2'},
                     meta: [],
                 },
                 {
