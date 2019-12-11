@@ -15,6 +15,7 @@ import npsbus from '@/pages/npsbus'
 import npsDesc from '@/pages/npsDesc'
 import printing from '@/pages/printing'
 import addyg from '@/pages/addyg'
+import closeorder from '@/pages/closeorder'
 
 
 Vue.use(Router)
@@ -47,6 +48,12 @@ export default new Router({
                     path: '/order_2',
                     component: order_2,
                     name: {tit:'排单表',id:0,num:'2-2'},
+                    meta: [],
+                },
+                {
+                    path: '/closeorder',
+                    component: closeorder,
+                    name: {tit:'批量操作排单',id:1,num:'2-3'},
                     meta: [],
                 },
                 {

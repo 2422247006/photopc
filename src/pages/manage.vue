@@ -25,6 +25,9 @@
           <el-menu-item index="2-2">
             <router-link tag="span" to='/order_2'>排单表</router-link>
           </el-menu-item>
+           <el-menu-item index="2-3">
+            <router-link tag="span" to='/closeorder'>批量操作排单</router-link>
+          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
