@@ -16,13 +16,13 @@
         <el-button type="primary" @click="endclick()">后七天》</el-button>
       </div>
       <div class="desc" v-if="desc">
-        <p>白色:表示可预约的时间点</p>
-        <p style="statusor:gray">灰色:表示已过期的时间点</p>
+        <p >白色:表示可预约的时间点</p>
+        <p style="color:gray">灰色:表示已过期的时间点</p>
         <p>黑色:表示已预约的时间点</p>
-        <p style="statusor:#1989fa">蓝色:表示占位的时间点</p>
-        <p style="statusor:green">绿色:表示订单已完成的时间点</p>
-        <p style="statusor:red">红色:表示已关闭的时间点</p>
-        <p style="statusor:orange">橘色:表示未付款时间点</p>
+        <p style="color:#1989fa">蓝色:表示占位的时间点</p>
+        <p style="color:green">绿色:表示订单已完成的时间点</p>
+        <p style="color:red">红色:表示已关闭的时间点</p>
+        <p style="color:orange">橘色:表示未付款时间点</p>
       </div>
     </div>
     <div class="date">
@@ -596,8 +596,8 @@ export default {
       return s;
     }
   },
-  created() {
-    //初始获取今天至未来七天
+  mounted(){
+ //初始获取今天至未来七天
     const onyear = [];
     for (let i = 0; i < 7; i++) {
       const time = new Date(new Date().setDate(new Date().getDate() + i));
@@ -610,10 +610,13 @@ export default {
     this.time_data = onyear;
     this.time_data.splice(1, 5);
     this.datetime = this.time_data[0];
+  },
+  activated() {
+   
     // this.endtime = this.time_data[1];
     this.gettimelist();
   },
-  mounted() {}
+ 
 };
 </script>
 <style scoped>

@@ -8,6 +8,7 @@
         type="daterange"
         placeholder="选择日期范围"
         @change="changedate"
+        :picker-options="expiretimeoption"
       ></el-date-picker>
     </div>
     <div class="block">
@@ -16,7 +17,7 @@
         @change="time1"
         v-model="startTime"
         :picker-options="{
-      start: '08:00',
+      start: '10:00',
       step: '00:20',
       end: '21:40'
     }"
@@ -26,7 +27,7 @@
         @change="time2"
         v-model="endTime"
         :picker-options="{
-      start: '08:00',
+      start: '10:00',
       step: '00:20',
       end: '21:40',
       minTime: startTime
@@ -44,7 +45,7 @@
         ></el-option>
       </el-select>
     </div>
-     <div class="block">
+    <div class="block">
       <span class="span">操作</span>
       <el-select v-model="valuedo" placeholder="请选择">
         <el-option
@@ -55,7 +56,6 @@
         ></el-option>
       </el-select>
     </div>
-   
 
     <el-button type="primary" @click="submit" style="margin-left:10%;margin-top:30px;">确认</el-button>
   </div>
@@ -65,11 +65,16 @@
 export default {
   data() {
     return {
+      expiretimeoption: {
+        disabledDate(date) {
+          return date.getTime() <= Date.now();
+        }
+      },
       date: [],
       startTime: "",
       endTime: "",
       valuenum: "",
-      valuedo:'true',
+      valuedo: true,
       options: [
         {
           value: "1",
@@ -88,13 +93,13 @@ export default {
           label: "4"
         }
       ],
-       dooptions: [
+      dooptions: [
         {
-          value: "true",
+          value: true,
           label: "批量打开"
         },
         {
-          value: "false",
+          value: false,
           label: "批量关闭"
         }
       ]
@@ -111,27 +116,39 @@ export default {
       console.log(this.endTime);
     },
     submit() {
+      
       var that = this;
-      that.$axios
-        .post(that.$apiUrl + "/api/v1/schedule/close", {
-             closeDateList:that.date,
-              timeBegin:that.startTime,
-              timeEnd:that.endTime,
-            closeNum:that.value,
-            openSchedule:that.valuedo
-        })
-        .then(function(res) {
-          if (res.data.status == "0000") {
+      console.log(that.date)
+      console.log(that.startTime)
+      console.log(that.endTime)
+      console.log(that.valuenum)
+      console.log(that.valuedo)
+      if (
+        that.date == "" ||
+        that.startTime == "" ||
+        that.endTime == "" ||
+        that.valuenum == "" 
+      ) {
+        that.$message.error("请完整填写");
+      } else {
+        that.$axios
+          .post(that.$apiUrl + "/api/v1/schedule/operation", {
+            dateBegin: that.date[0],
+            dateEnd: that.date[1],
+            timeBegin: that.startTime,
+            timeEnd: that.endTime,
+            num: that.valuenum,
+            openSchedule: that.valuedo
+          })
+          .then(function(res) {
             that.$message.success("操作成功");
-            that.date = [],
-              that.startTime = "",
-              that.endTime = "",
-            that.value = "",
-            that.valuedo=''
-          } else {
-            that.$message.error("请完整填写");
-          }
-        });
+            (that.date = []),
+              (that.startTime = ""),
+              (that.endTime = ""),
+              (that.valuenum = ""),
+              (that.valuedo = "");
+          });
+      }
     }
   },
   mounted() {}

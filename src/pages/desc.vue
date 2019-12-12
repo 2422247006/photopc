@@ -25,7 +25,7 @@
             ></el-date-picker>
             <el-time-select
               v-model="changetime.orderTime"
-              :picker-options="{start: '08:00',step: '00:20',end: '21:40'}"
+              :picker-options="{start: '10:00',step: '00:20',end: '21:40'}"
               placeholder="选择时间"
             ></el-time-select>
           </div>
