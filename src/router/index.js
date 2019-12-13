@@ -16,6 +16,7 @@ import npsDesc from '@/pages/npsDesc'
 import printing from '@/pages/printing'
 import addyg from '@/pages/addyg'
 import closeorder from '@/pages/closeorder'
+import addorder from '@/pages/addorder'
 
 
 Vue.use(Router)
@@ -44,6 +45,7 @@ export default new Router({
                     name:{tit:'拍摄订单管理',id:0,num:'2-1'},
                     meta: [],
                 },
+               
                 {
                     path: '/order_2',
                     component: order_2,
@@ -60,6 +62,12 @@ export default new Router({
                     path: '/desc',
                     component: desc,
                     name: {tit:'订单详情',id:1,num:'2-1'},
+                    meta: [],
+                },
+                {
+                    path: '/addorder',
+                    component: addorder,
+                    name:{tit:'新增订单',id:1,num:'2-1'},
                     meta: [],
                 },
                 {

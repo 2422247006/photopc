@@ -3,16 +3,20 @@
     <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
       <el-tab-pane :name="item.name" :label="item.label" v-for="item of tablist">
         <div class="search">
-          <el-select v-model="value" clearable placeholder="请选择" @change="selecechange">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-          <el-input v-model="input" placeholder="请输入搜索内容" class="inp"></el-input>
-          <el-button type="primary" @click="search()">查询</el-button>
+          <div style="display:flex;">
+            <el-select v-model="value" clearable placeholder="请选择" @change="selecechange">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+            <el-input v-model="input" placeholder="请输入搜索内容" class="inp"></el-input>
+            <el-button type="primary" @click="search()">查询</el-button>
+          </div>
+
+          <el-button type="primary" @click="addorderclick">添加订单</el-button>
         </div>
         <el-table :data="tableData" style="width: 100%">
           <el-table-column prop="orderNum" label="订单号"></el-table-column>
@@ -208,25 +212,21 @@ export default {
       // }else if(this.selVal == ""&&this.input==''){
       // this.getlistinfo();
       // }
-//       if(this.selVal == ""&&this.input==''){
-//         alert(123)
-//  this.getlistinfo();
-//       }  
+      //       if(this.selVal == ""&&this.input==''){
+      //         alert(123)
+      //  this.getlistinfo();
+      //       }
       if (this.selVal == 1) {
         this.data_getlistinfo.custName = this.input;
       } else if (this.selVal == 2) {
         this.data_getlistinfo.custPhone = this.input;
       } else if (this.selVal == 3) {
         this.data_getlistinfo.orderNum = this.input;
-      }else if(this.selVal == ""&&this.input==''){ 
+      } else if (this.selVal == "" && this.input == "") {
         this.data_getlistinfo.custName = null;
-      this.getlistinfo();
+        this.getlistinfo();
       }
       this.getlistinfo();
-     
-      
-     
-
     },
     // 切换tab
     handleClick(tab, event) {
@@ -267,7 +267,7 @@ export default {
     },
 
     changepage(index, url, txt, row) {
-      console.log(row)
+      console.log(row);
       var that = this;
       if (index == 1) {
         var status_ = "";
@@ -302,6 +302,11 @@ export default {
         path: url,
         query: { title: txt, id: 1, row: row }
       });
+    },
+    addorderclick(){
+      this.$router.push({
+        path: '/addorder'
+      });
     }
   },
   activated() {
@@ -312,9 +317,12 @@ export default {
 
 <style scoped>
 .search {
-  width: 35%;
+  width: 100%;
   display: flex;
   margin: 20px;
+  justify-content: space-between;
+  padding: 0 10% 0 0;
+  box-sizing: border-box;
 }
 .inp {
   margin: 0 20px;
