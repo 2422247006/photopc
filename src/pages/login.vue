@@ -43,14 +43,19 @@ export default {
     getlogininfo: function() {
       var that = this;
       that.$axios
-        .post(that.$apiUrl + "/api/v1/user/login/admin", {
+        .post(that.$apiUrl + "/api/v1/admin/login", {
           loginName: that.loginName,
           loginPass: that.loginPass
         })
         .then(function(res) {
           console.log(res.data);
-        //   if (res.data.status == 16000) {
-        //     that.$alert("用户名和密码错误", "", {});
+          if (res.data.status == '0000') {
+            that.$router.push({
+            path: "/manage"
+          })
+          }else{
+             that.$alert(res.data.message, "", {});
+          }
         //   } else if (res.data.status == 10002) {
         //     that.$alert("请填写用户名和密码", "", {});
         //   }
@@ -58,9 +63,7 @@ export default {
         //   var headImg = res.data.body.headImg;
         //   sessionStorage.setItem("userName", userName);
         //   sessionStorage.setItem("headImg", headImg);
-          that.$router.push({
-            path: "/manage"
-          });
+         
         })
         .catch(function(error) {
           console.log(error);

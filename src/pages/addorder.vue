@@ -26,27 +26,6 @@
       <el-form-item label="产品" prop="custSex">
         <el-cascader @change="changeclick" v-model="product" :options="productlist" :props="optionProps" style="width: 100%;"></el-cascader>
       </el-form-item>
-      
-      <!-- <el-form-item label="产品" prop="productId">
-        <el-select v-model="form.productId" placeholder="请选择" style="width: 100%;">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="套餐" prop="comboId">
-        <el-select v-model="form.comboId" placeholder="请选择" style="width: 100%;">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          ></el-option>
-        </el-select>
-      </el-form-item> -->
       <el-form-item label="金额" prop="orderAmount">
         <el-input v-model="form.orderAmount" style="width: 100%;"></el-input>
       </el-form-item>

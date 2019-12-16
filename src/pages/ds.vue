@@ -112,7 +112,7 @@ export default {
       var that = this;
       that.value.orderId=that.row.id
       that.$axios
-        .post(that.$apiUrl + "/api/v1/user/employee/select")
+        .post(that.$apiUrl + "/api/v1/admin/select")
         .then(function(res) {
           that.staff = res.data.data;
         });

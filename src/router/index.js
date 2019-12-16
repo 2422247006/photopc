@@ -14,9 +14,10 @@ import nps from '@/pages/nps'
 import npsbus from '@/pages/npsbus'
 import npsDesc from '@/pages/npsDesc'
 import printing from '@/pages/printing'
-import addyg from '@/pages/addyg'
+import ygadmin from '@/pages/ygadmin'
 import closeorder from '@/pages/closeorder'
 import addorder from '@/pages/addorder'
+import addyg from '@/pages/addyg'
 
 
 Vue.use(Router)
@@ -89,9 +90,15 @@ export default new Router({
                     meta: [],
                 },
                 {
+                    path: '/ygadmin',
+                    component:ygadmin,
+                    name: {tit:'员工管理',id:0,num:'3-2'},
+                    meta: [],
+                },
+                {
                     path: '/addyg',
                     component:addyg,
-                    name: {tit:'新增员工',id:0,num:'3-2'},
+                    name: {tit:'新增员工',id:1,num:'3-2'},
                     meta: [],
                 },
                 {

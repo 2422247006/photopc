@@ -52,7 +52,7 @@
           </el-menu-item> -->
         </el-submenu>
           <el-menu-item index="3-2">
-            <router-link tag="span" to='/addyg'>新增员工</router-link>
+            <router-link tag="span" to='/ygadmin'>员工管理</router-link>
             </el-menu-item>
       </el-submenu>
       <!-- <el-submenu index="4">
@@ -78,6 +78,8 @@
       <div class="header">
         {{$route.name.tit}}
         <span class="back" @click="backclick" v-if="$route.name.id==1">返回</span>
+      <span style="float:right;margin:0 50px;color:rgb(17,58,100);" @click="edit">退出登录</span>
+        
       </div>
 
       <div class="wrap">
@@ -117,6 +119,19 @@ export default {
     },
     backclick() {
       this.$router.go(-1);
+    },
+    edit(){
+      var that=this
+       that.$axios
+        .get(that.$apiUrl + "/api/v1/admin/logout")
+        .then(function(res) {
+          that.$router.push({
+            path: "/"
+          });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   },
   created() {

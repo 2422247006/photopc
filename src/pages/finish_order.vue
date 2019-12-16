@@ -132,7 +132,7 @@ this.newselectlist.splice(index,1);
         return item
       })
     that.$axios
-        .post(that.$apiUrl + "/api/v1/order",{
+        .post(that.$apiUrl + "/api/v1/order/finish",{
           orderId:that.row.id,
           workloadList:list
         })
