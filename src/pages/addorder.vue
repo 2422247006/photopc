@@ -53,7 +53,7 @@
         <el-input v-model="form.remark" type="textarea" maxlength="100" show-word-limit></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submit">立即创建</el-button>
+        <el-button type="primary" @click="submit('form')">立即创建</el-button>
         <el-button @click="resetForm('form')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -110,7 +110,7 @@ export default {
     };
   },
   methods: {
-    submit(){
+    submit(form){
 var that = this;
 that.form.productId= that.product[0]
 that.form.comboId= that.product[1]
@@ -118,7 +118,9 @@ that.form.comboId= that.product[1]
         .post(that.$apiUrl + "/api/v1/order/create/back",that.form)
         .then(function(res) {
           // console.log(res.data.data);
-          // that.storelist = res.data.data;
+           that.$message("已新增");
+           that.$router.go(-1);//返回上一层
+           that.$refs[formName].resetFields();
         });
     },
     changeclick(){

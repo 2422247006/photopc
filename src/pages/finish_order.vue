@@ -119,7 +119,7 @@ this.newselectlist.splice(index,1);
       var that=this
       
       that.$axios
-        .post(that.$apiUrl + "/api/v1/user/employee/select")
+        .post(that.$apiUrl + "/api/v1/admin/select")
         .then(function(res) {
           console.log(res.data.data)
           that.ygoptions = res.data.data;

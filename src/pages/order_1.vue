@@ -33,7 +33,7 @@
           <el-table-column prop="status" label="订单状态" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="orderDate" label="预约时间" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="remarks" label="备注" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="do" label="操作">
+          <el-table-column prop="do" label="操作" width="200">
             <template slot-scope="scope">
               <el-button
                 style="cursor: pointer"
@@ -41,6 +41,13 @@
                 type="danger"
                 @click="handleDelete(scope.$index, scope.row)"
               >编辑</el-button>
+
+              <el-button
+                style="cursor: pointer"
+                size="mini"
+                type="danger"
+                @click="handleshare(scope.row)"
+              >分享</el-button>
               <div class="do" v-if="changeactive==scope.$index">
                 <p
                   v-for="(item,index) of list"
@@ -62,6 +69,27 @@
         ></el-pagination>
       </el-tab-pane>
     </el-tabs>
+
+    <el-dialog title="分享" :visible.sync="dialogVisible">
+      <div class="div txt">订单号:{{orderNum}}</div>
+      <div class="div">
+        <el-upload
+          ref="upload"
+          class="upload-demo"
+          action="http://106.12.5.191/jfxx-server-0.1/api/v1/order/share"
+          :on-change="handlePreview"
+          :on-remove="handleRemove"
+          :file-list="fileList"
+          list-type="picture"
+        >
+          <el-button size="small" type="primary">点击上传图片</el-button>
+          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+        <div class="div">
+          <el-button type="primary" @click="shareclick">分享至百度云</el-button>
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -69,6 +97,9 @@
 export default {
   data() {
     return {
+      fileList: [],
+      orderNum: "",
+      dialogVisible: false,
       data_getlistinfo: {
         custName: null,
         custPhone: null,
@@ -164,10 +195,40 @@ export default {
           value: "3",
           label: "订单号"
         }
-      ]
+      ],
+      shareCode: "",
+      shareLink: "https://pan.baidu.com/s/1c0dn5UapzciMLzt8GWzq8w"
     };
   },
   methods: {
+    shareclick() {
+      let formData = new FormData();
+      formData.append("orderNum", this.orderNum);
+      formData.append("shareLink", this.shareLink);
+       formData.append("shareCode", this.shareCode)
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      var that = this;
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/order/share", formData, config)
+        .then(function(res) {});
+    },
+    handleshare(row) {
+      console.log(row);
+      this.orderNum = row.orderNum;
+      this.dialogVisible = true;
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      // this. fileList.push(file.raw)
+      this.shareCode = file.raw;
+      console.log(file);
+    },
     //获取列表数据
     getlistinfo() {
       var that = this;
@@ -303,9 +364,9 @@ export default {
         query: { title: txt, id: 1, row: row }
       });
     },
-    addorderclick(){
+    addorderclick() {
       this.$router.push({
-        path: '/addorder'
+        path: "/addorder"
       });
     }
   },
@@ -342,5 +403,11 @@ export default {
 }
 .col {
   color: blue;
+}
+.div {
+  margin: 30px 0;
+}
+.txt {
+  font-size: 16px;
 }
 </style>

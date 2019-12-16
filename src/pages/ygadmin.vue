@@ -65,12 +65,15 @@
           </el-select>
         </el-form-item>
         <el-form-item label="员工状态">
-          <el-select v-model="formLabelAlign.status" placeholder="请选择">
-            <el-option label="在职" value='true'></el-option>
-            <el-option label="离职" value='false'></el-option>
+          <el-select v-model="formLabelAlign.status" placeholder="请选择" @change="changeselect">
+            <el-option label="在职" value="true"></el-option>
+            <el-option label="离职" value="false"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="离职日期(选填)" v-if="formLabelAlign.status!=='true'&&formLabelAlign.status!=='在职'">
+        <el-form-item
+          label="离职日期(选填)"
+          v-if="formLabelAlign.status!=='true'&&formLabelAlign.status!=='在职'"
+        >
           <el-date-picker
             style="width: 100%;"
             value-format="yyyy-MM-dd"
@@ -186,28 +189,35 @@ export default {
       this.formLabelAlign.role = row.role;
       this.formLabelAlign.userName = row.userName;
       this.formLabelAlign.userPhone = row.userPhone;
-      if(row.leaveDate!==null){
- this.formLabelAlign.leaveDate = new Date(row.leaveDate);
+      if (row.leaveDate !== null) {
+        this.formLabelAlign.leaveDate = new Date(row.leaveDate);
+      }else{
+        this.formLabelAlign.leaveDate = null
       }
+    },
+    changeselect() {
      
-      
+    console.log(this.formLabelAlign.status);
+      if (this.formLabelAlign.status == 'true') {
+        this.formLabelAlign.leaveDate = null;
+      }
     },
     //保存编辑
     editclick() {
-       if(this.formLabelAlign.status=='在职'){
-       this.formLabelAlign.status=true
-      }else if(this.formLabelAlign.status=='离职'){
-          this.formLabelAlign.status=false
+       if (this.formLabelAlign.status == "在职") {
+        this.formLabelAlign.status = true;
+      } else if (this.formLabelAlign.status == "离职") {
+        this.formLabelAlign.status = false;
       }
       var that = this;
-      
+
       that.$axios
         .post(that.$apiUrl + "/api/v1/admin/edit", that.formLabelAlign)
         .then(function(res) {
-         if(res.data.status=="0000"){
+          if (res.data.status == "0000") {
             that.getinfolist();
             that.dialogVisible = false;
-         }
+          }
         });
     }
   },
