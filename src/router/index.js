@@ -18,6 +18,8 @@ import ygadmin from '@/pages/ygadmin'
 import closeorder from '@/pages/closeorder'
 import addorder from '@/pages/addorder'
 import addyg from '@/pages/addyg'
+import product from '@/pages/product'
+import productinfo from '@/pages/productinfo'
 
 
 Vue.use(Router)
@@ -38,6 +40,18 @@ export default new Router({
                     path: '',
                     component: home,
                     name:{ tit:'概括',id:0,num:'1'},
+                    meta: [],
+                },
+                {
+                    path: '/product',
+                    component:product,
+                    name:{ tit:'产品管理',id:0,num:'4'},
+                    meta: [],
+                },
+                {
+                    path: '/productinfo',
+                    component:productinfo,
+                    name:{ tit:'产品详情',id:1,num:'4'},
                     meta: [],
                 },
                 {

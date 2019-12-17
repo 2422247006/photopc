@@ -74,8 +74,10 @@
       <div class="div txt">订单号:{{orderNum}}</div>
       <div class="div">
         <el-upload
+       
           ref="upload"
           class="upload-demo"
+          :auto-upload="false"
           action="http://106.12.5.191/jfxx-server-0.1/api/v1/order/share"
           :on-change="handlePreview"
           :on-remove="handleRemove"
@@ -197,10 +199,11 @@ export default {
         }
       ],
       shareCode: "",
-      shareLink: "https://pan.baidu.com/s/1c0dn5UapzciMLzt8GWzq8w"
+      shareLink: "链接: https://pan.baidu.com/s/1c0dn5UapzciMLzt8GWzq8w 提取码: 2hg9"
     };
   },
   methods: {
+    
     shareclick() {
       let formData = new FormData();
       formData.append("orderNum", this.orderNum);

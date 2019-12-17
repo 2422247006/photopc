@@ -30,6 +30,10 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+       <el-menu-item index="4">
+        <i class="el-icon-s-home"></i>
+         <router-link tag="span" to='/product'>产品管理</router-link>
+      </el-menu-item>
 
       <el-submenu index="3">
         <template slot="title">
@@ -78,7 +82,7 @@
       <div class="header">
         {{$route.name.tit}}
         <span class="back" @click="backclick" v-if="$route.name.id==1">返回</span>
-      <span style="float:right;margin:0 50px;color:rgb(17,58,100);" @click="edit">退出登录</span>
+      <span style="float:right;margin:0 50px;color:rgb(17,58,100);cursor:pointer" @click="edit">退出登录</span>
         
       </div>
 
