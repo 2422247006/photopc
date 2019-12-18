@@ -20,6 +20,7 @@ import addorder from '@/pages/addorder'
 import addyg from '@/pages/addyg'
 import product from '@/pages/product'
 import productinfo from '@/pages/productinfo'
+import addproduct from '@/pages/addproduct'
 
 
 Vue.use(Router)
@@ -52,6 +53,12 @@ export default new Router({
                     path: '/productinfo',
                     component:productinfo,
                     name:{ tit:'产品详情',id:1,num:'4'},
+                    meta: [],
+                },
+                {
+                    path: '/addproduct',
+                    component:addproduct,
+                    name:{ tit:'新增产品',id:1,num:'4'},
                     meta: [],
                 },
                 {

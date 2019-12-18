@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-        <el-button type="primary">新增产品</el-button>
+        <el-button type="primary" @click="addproduct">新增产品</el-button>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="id" label="产品编号"></el-table-column>
@@ -14,8 +14,7 @@
       <el-table-column prop="processing" label="冲印"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="details(scope.row)">详情</el-button>
-          <el-button type="text" size="small" >修改</el-button>
+          <el-button type="text" size="small" @click="details(scope.row)">编辑</el-button>
           <el-button type="text" size="small" >下架</el-button>
         </template>
       </el-table-column>
@@ -45,9 +44,14 @@ export default {
       this.$router.push({
         path: "/productinfo"
       });
+    },
+    addproduct(){
+      this.$router.push({
+        path: "/addproduct"
+      });
     }
   },
-  activated() {
+  created() {
     this.getinfolist();
   }
 };
