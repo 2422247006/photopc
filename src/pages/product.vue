@@ -15,7 +15,8 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="details(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" >下架</el-button>
+          <el-button type="text" size="small" @click="undercarriage(scope.index,scope.row)">下架</el-button>
+           <!-- <el-button type="text" size="small" @click="undercarriage(scope.index,scope.row)" v-if="$scoped.row.status === true? '下架':'已下架'">{{scope.row.status}}</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -26,7 +27,8 @@
 export default {
   data() {
     return {
-      tableData: []
+      tableData: [],
+      down:0
     };
   },
   methods: {
@@ -49,6 +51,21 @@ export default {
       this.$router.push({
         path: "/addproduct"
       });
+    },
+    undercarriage(index,row){
+      var that = this;
+      that.$axios
+        .get(that.$apiUrl + "/api/v1/product/down",{
+          params:{
+            productId:row.id
+          }
+        })
+        .then(function(res) {
+          that.$message("已下架");
+          that.down=index
+          // that.down="已下架"
+          console.log( that.down)
+        });
     }
   },
   created() {

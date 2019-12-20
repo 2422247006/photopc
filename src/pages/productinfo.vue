@@ -1,6 +1,12 @@
 <template>
-  <div style="display:flex">
-    <el-form ref="form" :model="form" label-width="100px" style="width:50%;">
+  <div>
+     <el-button type="primary" @click="onSubmit" style="margin:30px;">保存修改</el-button>
+     <div style="display:flex">
+       <el-form ref="form" :model="form" label-width="100px" style="width:50%;">
+        <!-- <el-form-item>
+        <el-button type="primary" @click="onSubmit">保存修改</el-button>
+        <el-button>取消</el-button>
+      </el-form-item> -->
       <el-form-item label="产品名称" style="width:60%;">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
@@ -23,12 +29,13 @@
         <el-input v-model="form.minPrice"></el-input>
       </el-form-item>
       <el-form-item label="产品展示图" style="width:90%;">
+        <img :src="form.indexImg" alt style="width:50%;height:200px;" />
         <el-upload
           ref="upload"
           class="upload-demo"
           :auto-upload="false"
           action="http://106.12.5.191/jfxx-server-0.1/api/v1/order/share"
-          :on-change="handlePreview"
+          :on-change="handlePreviewindexImg"
           :on-remove="handleRemove"
           :file-list="indexImgList"
           list-type="picture"
@@ -37,12 +44,13 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="产品大图" style="width:90%;">
+        <img :src="form.productShow" alt style="width:50%;height:200px;" />
         <el-upload
           ref="upload"
           class="upload-demo"
           :auto-upload="false"
           action="http://106.12.5.191/jfxx-server-0.1/api/v1/order/share"
-          :on-change="handlePreview"
+          :on-change="handlePreviewproductShow"
           :on-remove="handleRemove"
           :file-list="productShowList"
           list-type="picture"
@@ -51,12 +59,13 @@
         </el-upload>
       </el-form-item>
       <el-form-item label="产品详情图" style="width:90%;">
+        <img :src="form.productDetail" alt style="width:50%;height:600px;" />
         <el-upload
           ref="upload"
           class="upload-demo"
           :auto-upload="false"
           action="http://106.12.5.191/jfxx-server-0.1/api/v1/order/share"
-          :on-change="handlePreview"
+          :on-change="handlePreviewproductDetail"
           :on-remove="handleRemove"
           :file-list=" productDetailList"
           list-type="picture"
@@ -64,10 +73,7 @@
           <el-button size="small" type="primary">点击上传图片</el-button>
         </el-upload>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">保存修改</el-button>
-        <el-button>取消</el-button>
-      </el-form-item>
+    
     </el-form>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
@@ -79,9 +85,11 @@
         <el-input v-model="item.comboName"></el-input>
         <p style="width:20%;margin-left:10px;">价格</p>
         <el-input v-model="item.comboPrice"></el-input>
-        <el-button type="primary" size="small" style="margin-left:10px;" plain>下架</el-button>
+        <el-button type="primary" size="small" style="margin-left:10px;" plain @click="undercarriage(index)">下架</el-button>
       </div>
     </el-card>
+     </div>
+    
   </div>
 </template>
 
@@ -113,6 +121,8 @@ export default {
         }
       ],
       form: {
+         id:'',
+        indexImage: "",
         name: "",
         minPrice: "",
         productShow: "",
@@ -134,35 +144,85 @@ export default {
       },
       indexImgList: [],
       productShowList: [],
-      productDetailList: []
+      productDetailList: [],
+      indexImage: "",
+      productShow: "",
+      productDetail: "",
+     
     };
   },
-  methods:{
-addcombo(index){
-  this.form.comboList.push(
-    {
-          comboName: "",
-          comboPrice: ""
+  methods: {
+    addcombo(index) {
+      this.form.comboList.push({
+        id: "",
+        parentCombo: "",
+        comboName: "",
+        comboPrice: ""
+      });
+    },
+    onSubmit() {
+      let formData = new FormData();
+      if (this.indexImage != "") {
+        formData.append("indexImage", this.indexImage);
+      }
+      if (this.productShow != "") {
+        formData.append("productShow", this.productShow);
+      }
+      if (this.productDetail != "") {
+        formData.append("productDetail", this.productDetail);
+      }
+      formData.append("name", this.form.name);
+       formData.append("id", this.form.id);
+      formData.append(" minPrice", this.form.minPrice);
+      formData.append("model", this.form.model);
+      formData.append("clothing", this.form.clothing);
+      formData.append("background", this.form.background);
+      formData.append("negative", this.form.negative);
+      formData.append("processing", this.form.processing);
+      formData.append("comboList", JSON.stringify(this.form.comboList));
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
         }
-  )
-}
+      };
+      var that = this;
+      that.$axios
+        .post(that.$apiUrl + "/api/v1/product/merge", formData, config)
+        .then(function(res) {});
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreviewindexImg(file) {
+      this.indexImage = file.raw;
+      console.log(file);
+    },
+    handlePreviewproductShow(file) {
+      this.productShow = file.raw;
+      console.log(file);
+    },
+    handlePreviewproductDetail(file) {
+      this.productDetail = file.raw;
+      console.log(file);
+    },
+    undercarriage(index){
+      this.form.comboList.splice(index,1);
+    }
   },
-  created() {
-    
-  },
-  activated(){
-     console.log("哈哈哈");
+  created() {},
+  activated() {
     this.form = JSON.parse(sessionStorage.getItem("productRow"));
-    this.indexImgList=[]
-    this.indexImgList.push({
-      url: this.form.indexImg
-    });
-    this.productShowList.push({
-      url: this.form.productShow
-    });
-    this.productDetailList.push({
-      url: this.form.productDetail
-    });
+    console.log(this.form);
+    // this.indexImgList = [];
+    // this.indexImgList.push({
+    //   url: this.form.indexImg
+    // });
+    // this.productShowList.push({
+    //   url: this.form.productShow
+    // });
+    // this.productDetailList.push({
+    //   url: this.form.productDetail
+    // });
   }
 };
 </script>
