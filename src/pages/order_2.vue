@@ -12,8 +12,9 @@
         <img src="../assets/icon/why.png" style="width:100%;height:100%;background:none" />
       </div>
       <div style="margin-left:30%;">
-        <el-button type="primary" @click="beginclick()">《前七天</el-button>
-        <el-button type="primary" @click="endclick()">后七天》</el-button>
+       
+        <el-button type="primary" @click="beginclick()" :loading="btn">《前七天</el-button>
+        <el-button type="primary" @click="endclick()" :loading="btn2">后七天》</el-button>
       </div>
       <div class="desc" v-if="desc">
         <p >白色:表示可预约的时间点</p>
@@ -69,6 +70,8 @@
 export default {
   data() {
     return {
+      btn:false,
+      btn2:false,
       off: 0,
       datetime: "",
       status_: "",
@@ -408,6 +411,7 @@ export default {
     //点击前七天
     beginclick() {
       var that = this;
+      that.btn=true
       var qqq = that.daylist.map(function(item) {
         return item.date;
       });
@@ -424,6 +428,7 @@ export default {
     //点击后七天
     endclick() {
       var that = this;
+       that.btn2=true
        var that = this;
       var qqq = that.daylist.map(function(item) {
         return item.date;
@@ -520,6 +525,8 @@ export default {
         .then(function(res) {
           var aaa = res.data.data;
           that.daylist = aaa.map(function(item) {
+            that.btn=false
+            that.btn2=false
             item.date = String(item.date);
             item.date = item.date.slice(0, 4) + "-" + item.date.slice(4);
             item.date = item.date.slice(0, 7) + "-" + item.date.slice(7);
