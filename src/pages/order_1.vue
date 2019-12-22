@@ -47,11 +47,12 @@
                 size="mini"
                 type="danger"
                 @click="handleshare(scope.row)"
+                v-if="scope.row.status=='完成'"
               >分享</el-button>
               <div class="do" v-if="changeactive==scope.$index">
                 <p
                   v-for="(item,index) of list"
-                  :class="{col:changecol==index}"
+                 
                   @click="changepage(index,item.url,item.txt,scope.row)"
                   :key="item.id"
                 >{{item.txt}}</p>
@@ -217,7 +218,20 @@ export default {
       var that = this;
       that.$axios
         .post(that.$apiUrl + "/api/v1/order/share", formData, config)
-        .then(function(res) {});
+        .then(function(res) {
+          if(res.data.status=="0000"){
+            that.$message({
+              type: "info",
+              message: "已分享"
+            });
+            that.dialogVisible = false;
+          }else{
+            that.$message({
+              type: "info",
+              message: res.data.message
+            });
+          }
+        });
     },
     handleshare(row) {
       console.log(row);

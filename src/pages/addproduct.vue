@@ -99,11 +99,11 @@ export default {
   data() {
     return {
       form: {
-        indexImage: "",
+         indexImage: "",
         name: "",
         minPrice: "",
-        productShow: "",
-        productDetail: "",
+        productShowImg: "",
+        productDetailImg: "",
         indexImg: "",
         model: "",
         clothing: "",
@@ -112,8 +112,7 @@ export default {
         processing: "",
         comboList: [
           {
-            id: "",
-            parentCombo: "",
+            
             comboName: "",
             comboPrice: ""
           }
@@ -130,9 +129,9 @@ export default {
 
       formData.append("indexImage", this.form.indexImage);
 
-      formData.append("productShow", this.form.productShow);
+      formData.append("productShowImg", this.form.productShowImg);
 
-      formData.append("productDetail", this.form.productDetail);
+      formData.append("productDetailImg", this.form.productDetailImg);
 
       formData.append("name", this.form.name);
       formData.append(" minPrice", this.form.minPrice);
@@ -141,7 +140,14 @@ export default {
       formData.append("background", this.form.background);
       formData.append("negative", this.form.negative);
       formData.append("processing", this.form.processing);
-      formData.append("comboList", JSON.stringify(this.form.comboList));
+      for (let i = 0; i < this.form.comboList.length; i++) {
+        for (let key in this.form.comboList[i]) {
+          formData.append(
+            `comboList[${i}].${key}`,
+            this.form.comboList[i][key]
+          );
+        }
+      }
       let config = {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -150,12 +156,38 @@ export default {
       var that = this;
       that.$axios
         .post(that.$apiUrl + "/api/v1/product/add", formData, config)
-        .then(function(res) {});
+        .then(function(res) {
+           that.$message("已新增");
+            that.$router.go(-1);//返回上一层
+            that.form={
+         indexImage: "",
+        name: "",
+        minPrice: "",
+        productShowImg: "",
+        productDetailImg: "",
+        indexImg: "",
+        model: "",
+        clothing: "",
+        background: "",
+        negative: "",
+        processing: "",
+        comboList: [
+          {
+            
+            comboName: "",
+            comboPrice: ""
+          }
+        ]
+      }
+      that.indexImgList=[],
+      that.productShowList=[],
+      that.productDetailList=[]
+
+        });
     },
     addcombo(index) {
       this.form.comboList.push({
-        id: "",
-        parentCombo: "",
+       
         comboName: "",
         comboPrice: ""
       });
@@ -168,11 +200,11 @@ export default {
       console.log(file);
     },
     handlePreviewproductShow(file) {
-      this.form.productShow = file.raw;
+      this.form.productShowImg = file.raw;
       console.log(file);
     },
     handlePreviewproductDetail(file) {
-      this.form.productDetail = file.raw;
+      this.form.productDetailImg = file.raw;
       console.log(file);
     },
     undercarriage(index) {

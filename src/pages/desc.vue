@@ -17,7 +17,7 @@
           </p>
           <div class="l_picker">
             <el-date-picker
-              value-format="yyyyMMdd"
+              value-format="yyyy-MM-dd"
               v-model="changetime.orderDate"
               type="date"
               placeholder="选择日期"
@@ -122,23 +122,29 @@ export default {
           label: "北京烤鸭"
         }
       ],
-      payload: {}
+      payload: {},
+      newdate:""
     };
   },
   methods: {
     cccc() {
       console.log(this.changetime.orderDate);
+      this.newdate=this.changetime.orderDate
     },
     changesj() {
       var that = this;
+    
+     if( that.newdate==""){
+       that.newdate="null"
+     }
       that.$axios
-        .get(that.$apiUrl + "/api/v1/order/modify/date", {
-          params: {
-            orderDate: that.changetime.orderDate,
-            orderTime: that.changetime.orderTime,
-            id: that.changetime.id
-          }
-        })
+        .post(that.$apiUrl + "/api/v1/order/modify/date",that.changetime
+          // params: {
+            // orderDate: that.changetime.orderDate,
+            // orderTime: that.changetime.orderTime,
+            // id: that.changetime.id
+          // }
+        )
         .then(function(res) {
           // console.log(res.data);
           if (res.data.status == 200) {
@@ -150,6 +156,7 @@ export default {
     },
     changecustinfo() {
       var that = this;
+     
       that.$axios
         .get(that.$apiUrl + "/api/v1/order/modify/cust", {
           params: {

@@ -15,8 +15,8 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="details(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="undercarriage(scope.index,scope.row)">下架</el-button>
-           <!-- <el-button type="text" size="small" @click="undercarriage(scope.index,scope.row)" v-if="$scoped.row.status === true? '下架':'已下架'">{{scope.row.status}}</el-button> -->
+          <el-button type="text" size="small" @click="undercarriage(scope.index,scope.row)"  v-if="scope.row.deleted==false">下架</el-button>
+           <el-button type="text" size="small" v-else >已下架</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,13 +62,14 @@ export default {
         })
         .then(function(res) {
           that.$message("已下架");
-          that.down=index
+          that.getinfolist();
+          // that.down=index
           // that.down="已下架"
-          console.log( that.down)
+          // console.log( that.down)
         });
     }
   },
-  created() {
+  activated() {
     this.getinfolist();
   }
 };

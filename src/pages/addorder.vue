@@ -21,17 +21,30 @@
             :label="item.storeName"
             :value="item.id"
           ></el-option>
-        </el-select> 
+        </el-select>
       </el-form-item>
       <el-form-item label="产品" prop="custSex">
-        <el-cascader @change="changeclick" v-model="product" :options="productlist" :props="optionProps" style="width: 100%;"></el-cascader>
+        <el-cascader
+          @change="changeclick"
+          v-model="product"
+          :options="productlist"
+          :props="optionProps"
+          style="width: 100%;"
+        ></el-cascader>
       </el-form-item>
       <el-form-item label="金额" prop="orderAmount">
         <el-input v-model="form.orderAmount" style="width: 100%;"></el-input>
       </el-form-item>
+      <el-form-item label="支付方式" prop="custSex">
+        <el-select v-model="form.payType" placeholder="请选择" style="width: 100%;">
+          <el-option label="微信" value="WEI_XIN"></el-option>
+          <el-option label="支付宝" value="ZHI_FU_BAO"></el-option>
+           <el-option label="现金" value="XIAN_JIN"></el-option>
+        </el-select>
+      </el-form-item>
       <el-form-item label="预约日期" prop="orderDate">
         <el-date-picker
-        style="width: 100%;"
+          style="width: 100%;"
           value-format="yyyyMMdd"
           v-model="form.orderDate"
           type="date"
@@ -40,7 +53,7 @@
       </el-form-item>
       <el-form-item label="预约时间" prop="orderTime">
         <el-time-select
-        style="width: 100%;"
+          style="width: 100%;"
           v-model="form.orderTime"
           :picker-options="{
       start: '10:00',
@@ -78,9 +91,10 @@ export default {
         orderDate: "",
         orderTime: "",
         productId: "",
-         comboId: "",
+        comboId: "",
         remark: "",
-        storeId: ""
+        storeId: "",
+        payType:""
       },
       options: [
         {
@@ -106,25 +120,38 @@ export default {
       ],
       productlist: [],
       storelist: [],
-      product:[]
+      product: []
     };
   },
   methods: {
-    submit(form){
-var that = this;
-that.form.productId= that.product[0]
-that.form.comboId= that.product[1]
+    submit(form) {
+      var that = this;
+      that.form.productId = that.product[0];
+      that.form.comboId = that.product[1];
       that.$axios
-        .post(that.$apiUrl + "/api/v1/order/create/back",that.form)
+        .post(that.$apiUrl + "/api/v1/order/create/back", that.form)
         .then(function(res) {
           // console.log(res.data.data);
-           that.$message("已新增");
-           that.$router.go(-1);//返回上一层
-           that.$refs[formName].resetFields();
+          that.$message("已新增");
+          that.$router.go(-1); //返回上一层
+          (this.form = {
+            custName: "",
+            custPhone: "",
+            custSex: "",
+            orderAmount: "",
+            orderDate: "",
+            orderTime: "",
+            productId: "",
+            comboId: "",
+            remark: "",
+            storeId: "",
+            payType:""
+          }),
+            that.$refs[formName].resetFields();
         });
     },
-    changeclick(){
-    console.log(this.form.productId);
+    changeclick() {
+      console.log(this.form.productId);
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -152,7 +179,6 @@ that.form.comboId= that.product[1]
             });
             return item;
           });
-        
         });
     }
   },
@@ -165,7 +191,7 @@ that.form.comboId= that.product[1]
 .size {
   width: 30%;
 }
-.el-form-item{
-  margin:20px 0;
+.el-form-item {
+  margin: 20px 0;
 }
 </style>
