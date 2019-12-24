@@ -4,19 +4,22 @@
         <el-button type="primary" @click="addproduct">新增产品</el-button>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="id" label="产品编号"></el-table-column>
-      <el-table-column prop="name" label="产品名称"></el-table-column>
-      <el-table-column prop="minPrice" label="价格"></el-table-column>
-      <el-table-column prop="model" label="化妆"></el-table-column>
-      <el-table-column prop="clothing" label="服装"></el-table-column>
-      <el-table-column prop="background" label="拍摄"></el-table-column>
-      <el-table-column prop="negative" label="修图"></el-table-column>
-      <el-table-column prop="processing" label="冲印"></el-table-column>
+      <el-table-column prop="id" label="产品编号" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="name" label="产品名称" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="minPrice" label="价格" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="model" label="化妆" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="clothing" label="服装" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="background" label="拍摄" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="negative" label="修图" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="processing" label="冲印" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="details(scope.row)">编辑</el-button>
+         
           <el-button type="text" size="small" @click="undercarriage(scope.index,scope.row)"  v-if="scope.row.deleted==false">下架</el-button>
-           <el-button type="text" size="small" v-else >已下架</el-button>
+           
+           <el-button type="text" size="small" v-if="scope.row.deleted==true" >已下架</el-button>
+            <el-button type="text" size="small"  v-if="scope.row.deleted==true" >上架</el-button>
         </template>
       </el-table-column>
     </el-table>

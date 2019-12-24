@@ -19,7 +19,7 @@
           <el-button type="primary" @click="addorderclick">添加订单</el-button>
         </div>
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="orderNum" label="订单号"></el-table-column>
+          <el-table-column prop="orderNum" label="订单号" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="custName" label="姓名" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="custPhone" label="手机号" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="actualPay" label="实际支付" :show-overflow-tooltip="true"></el-table-column>
@@ -31,7 +31,11 @@
             </template>
           </el-table-column>
           <el-table-column prop="status" label="订单状态" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="orderDate" label="预约时间" :show-overflow-tooltip="true"></el-table-column>
+          <el-table-column prop="orderDate" label="预约时间" :show-overflow-tooltip="true">
+             <template slot-scope="scope">
+            {{scope.row.orderDate}} {{scope.row.orderTime}}
+        </template>
+          </el-table-column>
           <el-table-column prop="remarks" label="备注" :show-overflow-tooltip="true"></el-table-column>
           <el-table-column prop="do" label="操作" width="200">
             <template slot-scope="scope">
@@ -266,6 +270,9 @@ export default {
             } else if (item.status == "closed") {
               item.status = "已关闭";
             }
+             item.orderDate = item.orderDate.toString();
+            item.orderDate = item.orderDate.slice(0, 4) + "-" + item.orderDate.slice(4);
+            item.orderDate = item.orderDate.slice(0, 7) + "-" + item.orderDate.slice(7);
             return item;
           });
         });

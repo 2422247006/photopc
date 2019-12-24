@@ -141,7 +141,7 @@ export default {
           }
 
           that.xddate = bbb;
-          that.yyDate = aaa + that.listinfo.orderTime;
+          that.yyDate = aaa +" "+ that.listinfo.orderTime;
           that.$emit("childFn", that.listinfo);
           if (that.listinfo.status == "unpaid") {
             that.listinfo.status = "未支付";
