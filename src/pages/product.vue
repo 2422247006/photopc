@@ -57,7 +57,12 @@ export default {
     },
     undercarriage(index,row){
       var that = this;
-      that.$axios
+       that.$confirm('此操作将下架商品, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+           that.$axios
         .get(that.$apiUrl + "/api/v1/product/down",{
           params:{
             productId:row.id
@@ -66,11 +71,12 @@ export default {
         .then(function(res) {
           that.$message("已下架");
           that.getinfolist();
-          // that.down=index
-          // that.down="已下架"
-          // console.log( that.down)
+          
         });
-    }
+        }).catch(() => {
+                   
+        });
+      }
   },
   activated() {
     this.getinfolist();

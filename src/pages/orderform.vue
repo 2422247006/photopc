@@ -190,7 +190,7 @@ export default {
   activated() {
     this.row = JSON.parse(sessionStorage.getItem("orderRow"));
 
-    // console.log(this.row);
+    console.log(this.$route.query.row);
     this.getlistinfo();
     //  console.log(this.listinfo_)
   }

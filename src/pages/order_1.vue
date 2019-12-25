@@ -385,7 +385,7 @@ export default {
       that.changecol = index;
       that.$router.push({
         path: url,
-        query: { title: txt, id: 1, row: row }
+        query: { title: txt, id: 1, row:row.id }
       });
     },
     addorderclick() {
