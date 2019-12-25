@@ -132,15 +132,17 @@ export default {
         .then(function(res) {
           // console.log(res.data.data);
           that.listinfo = res.data.data;
-          var bbb = that.dateTime(that.listinfo.createDateTime);
-          console.log(that.listinfo.orderDate);
+          var bbb = new Date(that.listinfo.createDateTime).toJSON()
+          var ggg = new Date(+new Date(bbb)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/\.[\d]{3}Z/,'');
+
+          console.log(ggg)
           if (that.listinfo.orderDate !== null) {
             var aaa = that.listinfo.orderDate.toString();
             aaa = aaa.slice(0, 4) + "-" + aaa.slice(4);
             aaa = aaa.slice(0, 7) + "-" + aaa.slice(7);
           }
 
-          that.xddate = bbb;
+          that.xddate =ggg;
           that.yyDate = aaa +" "+ that.listinfo.orderTime;
           that.$emit("childFn", that.listinfo);
           if (that.listinfo.status == "unpaid") {
@@ -167,26 +169,27 @@ export default {
           console.log(that.orderDsList);
         });
     },
-    dateTime(rowData) {
-      // console.log(rowData)
-      var d = new Date(rowData);
-
-      var a =
-        d.getFullYear() +
-        "-" +
-        (d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1) +
-        "-" +
-        (d.getDate() < 10 ? "0" + d.getDate() : d.getDate()) +
-        " " +
-        (d.getHours() < 10 ? "0" + d.getDate() : d.getDate()) +
-        ":" +
-        (d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()) +
-        ":" +
-        (d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds());
-
-      return a;
-    }
   },
+  //   dateTime(rowData) {
+  //     // console.log(rowData)
+  //     var d = new Date(rowData);
+
+  //     var a =
+  //       d.getFullYear() +
+  //       "-" +
+  //       (d.getMonth() + 1 < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1) +
+  //       "-" +
+  //       (d.getDate() < 10 ? "0" + d.getDate() : d.getDate()) +
+  //       " " +
+  //       (d.getHours() < 10 ? "0" + d.getDate() : d.getDate()) +
+  //       ":" +
+  //       (d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()) +
+  //       ":" +
+  //       (d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds());
+
+  //     return a;
+  //   }
+  // },
   activated() {
     this.row = JSON.parse(sessionStorage.getItem("orderRow"));
 

@@ -19,7 +19,7 @@
           <el-button type="text" size="small" @click="undercarriage(scope.index,scope.row)"  v-if="scope.row.deleted==false">下架</el-button>
            
            <el-button type="text" size="small" v-if="scope.row.deleted==true" >已下架</el-button>
-            <el-button type="text" size="small"  v-if="scope.row.deleted==true" >上架</el-button>
+            <el-button type="text" size="small"  v-if="scope.row.deleted==true" @click="upcarriage(scope.index,scope.row)">上架</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -31,7 +31,8 @@ export default {
   data() {
     return {
       tableData: [],
-      down:0
+      down:0,
+      isDown:""
     };
   },
   methods: {
@@ -62,14 +63,40 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          that.isDown=true
            that.$axios
         .get(that.$apiUrl + "/api/v1/product/down",{
           params:{
-            productId:row.id
+            productId:row.id,
+            isDown:that.isDown
           }
         })
         .then(function(res) {
           that.$message("已下架");
+          that.getinfolist();
+          
+        });
+        }).catch(() => {
+                   
+        });
+      },
+      upcarriage(index,row){
+      var that = this;
+       that.$confirm('此操作将上架商品, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          that.isDown=false
+           that.$axios
+        .get(that.$apiUrl + "/api/v1/product/down",{
+          params:{
+            productId:row.id,
+            isDown:that.isDown
+          }
+        })
+        .then(function(res) {
+          that.$message("已上架");
           that.getinfolist();
           
         });
