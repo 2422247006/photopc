@@ -57,7 +57,7 @@
       </el-select>
     </div>
 
-    <el-button type="primary" @click="submit" style="margin-left:10%;margin-top:30px;">确认</el-button>
+    <el-button type="primary" @click="submit" style="margin-left:10%;margin-top:30px;" :loading="btn">确认</el-button>
   </div>
 </template>
 
@@ -70,6 +70,7 @@ export default {
           return date.getTime() <= Date.now();
         }
       },
+      btn:false,
       date: [],
       startTime: "",
       endTime: "",
@@ -118,6 +119,7 @@ export default {
     submit() {
       
       var that = this;
+      that.btn=true
       console.log(that.date)
       console.log(that.startTime)
       console.log(that.endTime)
@@ -141,7 +143,11 @@ export default {
             openSchedule: that.valuedo
           })
           .then(function(res) {
+            
             that.$message.success("操作成功");
+             that.$router.push({
+                path: "/order_2"
+              });
             (that.date = []),
               (that.startTime = ""),
               (that.endTime = ""),

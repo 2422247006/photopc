@@ -79,332 +79,8 @@ export default {
       changeactive: -1,
       desc: false,
       details: false,
-      datelist: [
-        "10:00",
-        "11:00",
-        "12:00",
-        "13:00",
-        "14:00",
-        "15:00",
-        "16:00",
-        "17:00",
-        "18:00",
-        "19:00",
-        "20:00",
-        "21:00"
-      ],
-      daylist: [
-        {
-          id: 0,
-          day: "6月29日",
-          time: [
-            {
-              id: 0,
-              statusor: [
-                { id: 0, status: "0", title: "10:00" },
-                { id: 0, status: "1", title: "10:20" },
-                { id: 0, status: "2", title: "10:40" },
-                { id: 0, status: "3", title: "10:00" },
-                { id: 0, status: "4", title: "10:20" },
-                { id: 0, status: "5", title: "10:40" },
-                { id: 0, status: "6", title: "10:00" },
-                { id: 0, status: "3", title: "10:20" },
-                { id: 0, status: "0", title: "10:40" },
-                { id: 0, status: "1", title: "10:00" },
-                { id: 0, status: "4", title: "10:20" },
-                { id: 0, status: "3", title: "10:40" }
-              ]
-            },
-            {
-              id: 1,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 2,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 3,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 4,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 5,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 6,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 7,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 8,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 9,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 10,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "4" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "3" },
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "4" },
-                { id: 0, status: "3" }
-              ]
-            },
-            {
-              id: 11,
-              statusor: [
-                { id: 0, status: "0" },
-                { id: 0, status: "1" },
-                { id: 0, status: "2" },
-                { id: 0, status: "2" }
-              ]
-            }
-          ]
-        },
-        {
-          id: 1,
-          day: "6月29日",
-          time: [
-            { id: 0, statusor: "0" },
-            { id: 1, statusor: "0" },
-            { id: 2, statusor: "0" },
-            { id: 3, statusor: "0" },
-            { id: 4, statusor: "0" },
-            { id: 5, statusor: "0" },
-            { id: 6, statusor: "0" },
-            { id: 7, statusor: "0" },
-            { id: 8, statusor: "0" },
-            { id: 9, statusor: "0" },
-            { id: 10, statusor: "0" },
-            { id: 11, statusor: "0" }
-          ]
-        },
-        {
-          id: 2,
-          day: "6月29日",
-          time: [
-            { id: 0, statusor: "0" },
-            { id: 1, statusor: "0" },
-            { id: 2, statusor: "0" },
-            { id: 3, statusor: "0" },
-            { id: 4, statusor: "0" },
-            { id: 5, statusor: "0" },
-            { id: 6, statusor: "0" },
-            { id: 7, statusor: "0" },
-            { id: 8, statusor: "0" },
-            { id: 9, statusor: "0" },
-            { id: 10, statusor: "0" },
-            { id: 11, statusor: "0" }
-          ]
-        },
-        {
-          id: 3,
-          day: "6月29日",
-          time: [
-            { id: 0, statusor: "0" },
-            { id: 1, statusor: "0" },
-            { id: 2, statusor: "0" },
-            { id: 3, statusor: "0" },
-            { id: 4, statusor: "0" },
-            { id: 5, statusor: "0" },
-            { id: 6, statusor: "0" },
-            { id: 7, statusor: "0" },
-            { id: 8, statusor: "0" },
-            { id: 9, statusor: "0" },
-            { id: 10, statusor: "0" },
-            { id: 11, statusor: "0" }
-          ]
-        },
-        {
-          id: 4,
-          day: "6月29日",
-          time: [
-            { id: 0, statusor: "0" },
-            { id: 1, statusor: "0" },
-            { id: 2, statusor: "0" },
-            { id: 3, statusor: "0" },
-            { id: 4, statusor: "0" },
-            { id: 5, statusor: "0" },
-            { id: 6, statusor: "0" },
-            { id: 7, statusor: "0" },
-            { id: 8, statusor: "0" },
-            { id: 9, statusor: "0" },
-            { id: 10, statusor: "0" },
-            { id: 11, statusor: "0" }
-          ]
-        },
-        {
-          id: 5,
-          day: "6月29日",
-          time: [
-            { id: 0, statusor: "0" },
-            { id: 1, statusor: "0" },
-            { id: 2, statusor: "0" },
-            { id: 3, statusor: "0" },
-            { id: 4, statusor: "0" },
-            { id: 5, statusor: "0" },
-            { id: 6, statusor: "0" },
-            { id: 7, statusor: "0" },
-            { id: 8, statusor: "0" },
-            { id: 9, statusor: "0" },
-            { id: 10, statusor: "0" },
-            { id: 11, statusor: "0" }
-          ]
-        },
-        {
-          id: 6,
-          day: "6月29日",
-          time: [
-            { id: 0, statusor: "0" },
-            { id: 1, statusor: "0" },
-            { id: 2, statusor: "0" },
-            { id: 3, statusor: "0" },
-            { id: 4, statusor: "0" },
-            { id: 5, statusor: "0" },
-            { id: 6, statusor: "0" },
-            { id: 7, statusor: "0" },
-            { id: 8, statusor: "0" },
-            { id: 9, statusor: "0" },
-            { id: 10, statusor: "0" },
-            { id: 11, statusor: "0" }
-          ]
-        }
-      ]
+      daylist:[],
+      datelist:[]
     };
   },
   methods: {
@@ -473,22 +149,17 @@ export default {
         this.status_ = "closed";
         //白
         this.$confirm("该时间点暂无顾客预约", "空闲的时间点", {
-          // confirmButtonText: "添加预约",
-          cancelButtonText: "关闭时间点"
+           confirmButtonText: "关闭时间点",
+          cancelButtonText: "取消"
         })
           .then(() => {
-            this.$message({
-              type: "success",
-              message: "已添加!"
-            });
-          })
-          .catch(() => {
             this.changestatus(id);
             this.$message({
-              type: "info",
-              message: "已关闭"
+              type: "success",
+              message: "已关闭!"
             });
-          });
+          })
+          
       } else if (status == "booked") {
         //黑
         var aaa = "吴易凡";
@@ -530,8 +201,13 @@ export default {
             item.date = String(item.date);
             item.date = item.date.slice(0, 4) + "-" + item.date.slice(4);
             item.date = item.date.slice(0, 7) + "-" + item.date.slice(7);
-            return item;
+            item.timeList.map(function(s){
+              s.scheduleList=[s.scheduleList[0],s.scheduleList[4],s.scheduleList[8],s.scheduleList[1],s.scheduleList[5],s.scheduleList[9],s.scheduleList[2],s.scheduleList[6],s.scheduleList[10],s.scheduleList[3],s.scheduleList[7],s.scheduleList[11]]
+            })
+           
+            return  item;
           });
+          console.log(that.daylist)
         });
     },
     changestatus(id) {

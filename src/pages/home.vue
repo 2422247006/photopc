@@ -1,6 +1,7 @@
 <template>
     <div class="page">
         <div class="con">
+            <div class="div"> 11111</div>
             <h1>繁减肖像馆</h1>
            <h1>欢迎使用繁减管理系统</h1>
         </div>

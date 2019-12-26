@@ -147,7 +147,7 @@ export default {
         )
         .then(function(res) {
           // console.log(res.data);
-          if (res.data.status == 200) {
+          if (res.data.status == '0000') {
             that.$message("已修改");
           } else {
             that.$message(res.data.message);
