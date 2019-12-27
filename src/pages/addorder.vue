@@ -134,7 +134,7 @@ export default {
           // console.log(res.data.data);
           that.$message("已新增");
           that.$router.go(-1); //返回上一层
-          (this.form = {
+          (that.form = {
             custName: "",
             custPhone: "",
             custSex: "",
@@ -147,6 +147,7 @@ export default {
             storeId: "",
             payType:""
           }),
+          that.productlist=[]
             that.$refs[formName].resetFields();
         });
     },
