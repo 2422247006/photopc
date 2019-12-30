@@ -31,12 +31,12 @@
             </template>
           </el-table-column>
           <el-table-column prop="status" label="订单状态" :show-overflow-tooltip="true"></el-table-column>
-          <el-table-column prop="orderDate" label="预约时间" :show-overflow-tooltip="true">
+          <el-table-column prop="orderDate" width="200" label="预约时间" >
              <template slot-scope="scope">
             {{scope.row.orderDate}} {{scope.row.orderTime}}
         </template>
           </el-table-column>
-          <el-table-column prop="remarks" label="备注" :show-overflow-tooltip="true"></el-table-column>
+          <!-- <el-table-column prop="remarks" label="备注" :show-overflow-tooltip="true"></el-table-column> -->
           <el-table-column prop="do" label="操作" width="200">
             <template slot-scope="scope">
               <el-button
