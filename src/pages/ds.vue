@@ -40,7 +40,14 @@
     <div class="picker">
       <span class="name">DS金额</span>
 
-      <el-input v-model="value.dsAmount" placeholder="请输入内容" style="width:30%"></el-input>
+      <el-input
+        type="text"
+        v-model.number="value.dsAmount"
+        maxlength="3"
+        placeholder="请输入内容"
+        style="width:30%"
+        @blur="blurinput"
+      ></el-input>
     </div>
     <div class="picker">
       <span class="name">支付方式</span>
@@ -66,7 +73,7 @@ export default {
         dsType: "",
         employeeId: "",
         payType: "",
-        dsProduct:''
+        dsProduct: ""
       },
       row: {},
 
@@ -107,10 +114,17 @@ export default {
     };
   },
   methods: {
+    blurinput(){
+      // console.log(typeof(this.value.dsAmount))
+      if(typeof(this.value.dsAmount)!=='number'){
+         this.$message("金额请输入数字");
+         this.value.dsAmount=""
+      }
+    },
     //下拉选择员工
     getlistinfo() {
       var that = this;
-      that.value.orderId=that.row.id
+      that.value.orderId = that.row.id;
       that.$axios
         .post(that.$apiUrl + "/api/v1/admin/select")
         .then(function(res) {
@@ -120,12 +134,25 @@ export default {
     //确认录入
     submit() {
       var that = this;
-      that.$axios
+      if(that.value.dsType==""||that.value.dsAmount==""||that.value.employeeId==""||that.value.payType==""){
+        that.$message("请完整填写ds信息");
+      }else{
+ that.$axios
         .post(that.$apiUrl + "/api/v1/order/ds", that.value)
         .then(function(res) {
           that.$message("已录入");
           that.$router.go(-1);
+          that.value={
+        orderId: "",
+        dsAmount: "",
+        dsType: "",
+        employeeId: "",
+        payType: "",
+        dsProduct: ""
+      }
         });
+      }
+     
     }
   },
   mounted() {

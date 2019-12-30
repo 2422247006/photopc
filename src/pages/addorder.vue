@@ -32,14 +32,21 @@
           style="width: 100%;"
         ></el-cascader>
       </el-form-item>
-      <el-form-item label="金额" prop="orderAmount">
-        <el-input v-model="form.orderAmount" style="width: 100%;"></el-input>
+      <el-form-item
+        label="金额"
+        prop="orderAmount"
+        :rules="[
+     
+      { type: 'number', message: '金额必须为数字值'}
+    ]"
+      >
+        <el-input v-model.number="form.orderAmount" style="width: 100%;"></el-input>
       </el-form-item>
       <el-form-item label="支付方式" prop="custSex">
         <el-select v-model="form.payType" placeholder="请选择" style="width: 100%;">
           <el-option label="微信" value="WEI_XIN"></el-option>
           <el-option label="支付宝" value="ZHI_FU_BAO"></el-option>
-           <el-option label="现金" value="XIAN_JIN"></el-option>
+          <el-option label="现金" value="XIAN_JIN"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="预约日期" prop="orderDate">
@@ -94,7 +101,7 @@ export default {
         comboId: "",
         remark: "",
         storeId: "",
-        payType:""
+        payType: ""
       },
       options: [
         {
@@ -128,6 +135,7 @@ export default {
       var that = this;
       that.form.productId = that.product[0];
       that.form.comboId = that.product[1];
+      
       that.$axios
         .post(that.$apiUrl + "/api/v1/order/create/back", that.form)
         .then(function(res) {
@@ -145,10 +153,10 @@ export default {
             comboId: "",
             remark: "",
             storeId: "",
-            payType:""
+            payType: ""
           }),
-          that.productlist=[]
-            that.$refs[formName].resetFields();
+            (that.productlist = []);
+          that.$refs[formName].resetFields();
         });
     },
     changeclick() {

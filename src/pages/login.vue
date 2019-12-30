@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="header">繁简管理系统</div>
+    <div class="header">繁减管理系统</div>
     <div class="con">
       <div class="imgwrap">
         <div class="login">
