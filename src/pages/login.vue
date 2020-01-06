@@ -50,6 +50,7 @@ export default {
         .then(function(res) {
           console.log(res.data);
           if (res.data.status == '0000') {
+              sessionStorage.setItem("loginName",that.loginName);
             that.$router.push({
             path: "/manage"
           })
@@ -61,7 +62,7 @@ export default {
         //   }
         //   var userName = res.data.body.userName;
         //   var headImg = res.data.body.headImg;
-        //   sessionStorage.setItem("userName", userName);
+        
         //   sessionStorage.setItem("headImg", headImg);
          
         })

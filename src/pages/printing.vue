@@ -48,35 +48,34 @@
         <h1>修片要求</h1>
         <p>
           眼睛增大幅度：
-          <el-radio v-model="radio" label="1">小</el-radio>
-          <el-radio v-model="radio" label="2">中</el-radio>
-          <el-radio v-model="radio" label="3">大</el-radio>
-        </p>
-        <p>
+          <el-radio v-model="radio1" label="1">小</el-radio>
+          <el-radio v-model="radio1" label="2">中</el-radio>
+          <el-radio v-model="radio1" label="3">大</el-radio>
+       
           瘦脸幅度：
-          <el-radio v-model="radio" label="1">小</el-radio>
-          <el-radio v-model="radio" label="2">中</el-radio>
-          <el-radio v-model="radio" label="3">大</el-radio>
-        </p>
-        <p>
+          <el-radio v-model="radio2" label="1">小</el-radio>
+          <el-radio v-model="radio2" label="2">中</el-radio>
+          <el-radio v-model="radio2" label="3">大</el-radio>
+       
+      
           是否去祛痣：
-          <el-radio v-model="radio" label="1">是</el-radio>
-          <el-radio v-model="radio" label="2">否</el-radio>
+          <el-radio v-model="radio3" label="1">是</el-radio>
+          <el-radio v-model="radio3" label="2">否</el-radio>
         </p>
       </div>
       <div class="remark">
         <h1>备注信息:</h1>
-        <p>客服:</p>
-        <p>化妆:</p>
-        <p>摄影:</p>
-        <p>后期:</p>
+        <p>客服:<input></p>
+        <p>化妆:<input></p>
+        <p>摄影:<input></p>
+        <p>后期:<input></p>
       </div>
       <div class="desc"> 
-       <p>您承诺（或您的被监护人）拥有本订单项下照片的完整肖像权，您本人（或作为监护人）同意上海洁白文化传媒有限公司在繁减肖像馆门店、官方微博&微信公众号，或其他官方和合作平台，无偿使用本订单项下照片用作展示。
+       <p>您承诺（或您的被监护人）拥有本订单项下照片的完整肖像权，您本人（或作为监护人）同意上海洁白文化传<br><br>媒有限公司在繁减肖像馆门店、官方微博&微信公众号，或其他官方和合作平台，无偿使用本订单项下照片用<br><br>作展示。
        </p>
         <p>
-          <el-radio v-model="radio" label="1">同意</el-radio>
-          <el-radio v-model="radio" label="2">不同意</el-radio>
+          <el-radio v-model="radio4" label="1">同意</el-radio>
+          <el-radio v-model="radio4" label="2">不同意</el-radio>
         </p>
       </div>
     </div>
@@ -88,7 +87,10 @@
 export default {
   data() {
     return {
-      radio: "",
+      radio1: "",
+      radio2: "",
+      radio3: "",
+      radio4: "",
       row:'',
       listinfo:{
           productList:{}
@@ -111,17 +113,21 @@ getinfo() {
            var aaa = that.listinfo.orderDate.toString();
           aaa = aaa.slice(0, 4) + "-" + aaa.slice(4);
           aaa = aaa.slice(0, 7) + "-" + aaa.slice(7);
-          that.yyDate = aaa + that.listinfo.orderTime;
+          that.yyDate = aaa +"  "+ that.listinfo.orderTime;
         });
     }
   },
-  mounted() {
+ activated() {
         this.row = JSON.parse(sessionStorage.getItem("orderRow"));
         this.getinfo()
   },
 };
 </script>
 <style scoped>
+.remark p{
+  display: flex;
+  align-items: center
+}
 #printTest {
   width: 100%;
  
@@ -168,4 +174,9 @@ h1 {
     top:50px;
     right:50px;
 }
+</style>
+<style >
+  .el-radio{
+    margin-right:5px;
+  }
 </style>

@@ -82,7 +82,8 @@
       <div class="header">
         {{$route.name.tit}}
         <span class="back" @click="backclick" v-if="$route.name.id==1">返回</span>
-      <span style="float:right;margin:0 50px;color:rgb(17,58,100);cursor:pointer" @click="edit">退出登录</span>
+       
+      <span style="float:right;"> <span>{{loginName}}</span><span @click="edit" style="margin:0 50px;color:rgb(17,58,100);cursor:pointer">退出登录</span></span>
         
       </div>
 
@@ -102,6 +103,7 @@ export default {
 
   data() {
     return {
+      loginName:'',
       activeindex: "1",
       id: 0,
       title: "概况",
@@ -139,6 +141,7 @@ export default {
     }
   },
   created() {
+    this.loginName= sessionStorage.getItem("loginName");
     this.watchrouter();
     this.activeindex = sessionStorage.activeindex;
   }

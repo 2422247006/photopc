@@ -143,7 +143,7 @@ export default {
             openSchedule: that.valuedo
           })
           .then(function(res) {
-            
+              that.btn=false
             that.$message.success("操作成功");
              that.$router.push({
                 path: "/order_2"
