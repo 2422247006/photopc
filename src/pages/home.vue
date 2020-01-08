@@ -1,7 +1,6 @@
 <template>
     <div class="page">
         <div class="con">
-            <div class="div"> 11111</div>
             <h1>繁减肖像馆</h1>
            <h1>欢迎使用繁减管理系统</h1>
         </div>
@@ -39,5 +38,9 @@ export default {
   margin-left: 20px;
   font-size: 14px;
   cursor: pointer;
+}
+h1{
+    font-size: 30px;
+    margin:20px
 }
 </style>

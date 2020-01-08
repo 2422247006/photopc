@@ -231,7 +231,7 @@ export default {
     }
   },
   
-  created() {
+  activated() {
     this.form = JSON.parse(sessionStorage.getItem("productRow"));
     // this.form.comboList=[
     //       {
