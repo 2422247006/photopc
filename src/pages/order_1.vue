@@ -83,7 +83,7 @@
           ref="upload"
           class="upload-demo"
           :auto-upload="false"
-          action="http://106.12.5.191/jfxx-server-0.1/api/v1/order/share"
+          action="https://106.12.5.191/jfxx-server-0.1/api/v1/order/share"
           :on-change="handlePreview"
           :on-remove="handleRemove"
           :file-list="fileList"

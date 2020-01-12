@@ -10,7 +10,7 @@ import Print from 'vue-print-nb'
 Vue.use(ElementUI);
 Vue.use(Print);
 
-const apiUrl = "http://106.12.5.191/jfxx-server-0.1"
+const apiUrl = "https://106.12.5.191/jfxx-server-0.1"
 axios.defaults.withCredentials = true
 Vue.prototype.$axios = axios;
 Vue.prototype.$apiUrl = apiUrl;
