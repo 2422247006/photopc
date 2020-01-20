@@ -40,7 +40,7 @@
             list-type="picture"
           >
             <el-button size="small" type="primary">点击上传图片</el-button>
-             <div slot="tip" class="el-upload__tip">只能上传600*400尺寸</div>
+             <div slot="tip" class="el-upload__tip">只能上传600*400尺寸 图片名称不能为汉字</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="产品大图" style="width:90%;">
@@ -55,7 +55,7 @@
             list-type="picture"
           >
             <el-button size="small" type="primary">点击上传图片</el-button>
-             <div slot="tip" class="el-upload__tip">只能上传600*400尺寸</div>
+             <div slot="tip" class="el-upload__tip">只能上传600*400尺寸 图片名称不能为汉字</div>
           </el-upload>
         </el-form-item>
         <el-form-item label="产品详情图" style="width:90%;">
@@ -70,7 +70,7 @@
             list-type="picture"
           >
             <el-button size="small" type="primary">点击上传图片</el-button>
-             <div slot="tip" class="el-upload__tip">只能上传1826*12676尺寸</div>
+             <div slot="tip" class="el-upload__tip">只能上传1826*12676尺寸 图片名称不能为汉字</div>
           </el-upload>
         </el-form-item>
       </el-form>
